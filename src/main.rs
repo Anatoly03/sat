@@ -52,8 +52,8 @@ fn print_help(argc: String) {
     println!("======== SAT SOLVER ========
 Usage: {} -- \"\x1b[36mS\x1b[0m\" [OPTIONS]
 ======= SAT Grammar ========
-    \x1b[36mS\x1b[0m →\t\x1b[36mA\x1b[0m \x1b[33m| \t\x1b[36mS\x1b[0m \x1b[31m\"|\" \x1b[36mS\x1b[0m\t\t\x1b[30m% Example Sat: 1 2 -3 | 3 4 -5 | -5 -6\x1b[0m
-    \x1b[36mA\x1b[0m →\t\x1b[36mN\x1b[0m \x1b[33m| \t\x1b[36mA\x1b[0m \x1b[31m\"|\" \x1b[36mA\x1b[0m
+    \x1b[36mS\x1b[0m →\t\x1b[36mA\x1b[0m \x1b[33m| \t\x1b[36mS\x1b[0m \x1b[31m\" | \" \x1b[36mS\x1b[0m\t\t\x1b[30m% Example Sat: 1 2 -3 | 3 4 -5 | -5 -6\x1b[0m
+    \x1b[36mA\x1b[0m →\t\x1b[36mN\x1b[0m \x1b[33m| \t\x1b[36mA\x1b[0m \x1b[31m\" \" \x1b[36mA\x1b[0m
     \x1b[36mN\x1b[0m →\t\x1b[31m\"-\"\x1b[0m \x1b[33m? \x1b[36mI\x1b[0m   \t\t\x1b[30m% Negativity represents Negation
     \x1b[36mI\x1b[0m →\t\x1b[33m[\x1b[31m1-9\x1b[33m] [\x1b[31m0-9\x1b[33m]*\t\t\x1b[30m% Integers represent variable identifiers\x1b[0m
 ========= Options ==========
