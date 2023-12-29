@@ -7,14 +7,14 @@ pub type Variable = isize;
  * Satisfyability in Knf
  */
 #[derive(Debug)]
-pub struct KnfSat(Vec<Vec<Variable>>);
+pub struct KnfSat(pub Vec<Vec<Variable>>);
 
 /**
  * Implementations
  */
 impl KnfSat {
     pub fn new() -> Self {
-        Self(Vec::new())
+        Self(vec![vec![]])
     }
 
     pub fn is_solution(verify: Vec<Variable>) -> bool {
