@@ -1,3 +1,4 @@
+mod algs;
 mod parse;
 mod sat;
 #[cfg(test)]
