@@ -1,5 +1,5 @@
 use super::sat::{KnfSat, Variable};
-use std::{fmt::format, str::FromStr};
+use std::str::FromStr;
 
 impl FromStr for KnfSat {
     type Err = String;
