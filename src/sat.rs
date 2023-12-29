@@ -22,8 +22,15 @@ impl KnfSat {
  * Algorithmic Implementations
  */
 pub trait SatSolver {
-    type Input;
-    type Output;
+    type Input; //= Vec<Variable>;
+    type Output; // = Vec<Variable>;
+
+    /**
+     * Optimise Equation so solving it becomes easier.
+     */
+    fn optimise(&mut self) {
+        
+    }
 
     /**
      * Guess if the equation is satisfyable without finding a result

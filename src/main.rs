@@ -11,7 +11,7 @@ fn main() {
     let mut args = env::args().into_iter();
     let argc = args.next().unwrap();
     let mut knf_sat: Result<KnfSat, String> = Err("SAT Equation not specified".to_owned());
-    let mut version: i8 = 0;
+    let mut version: u8 = 0;
 
     while let Some(arg) = args.next() {
         match arg.as_str() {
@@ -24,7 +24,7 @@ fn main() {
             }
             "-v" => {
                 if let Some(v) = args.next() {
-                    if let Ok(int) = v.parse::<i8>() {
+                    if let Ok(int) = v.parse::<u8>() {
                         version = int;
                         continue;
                     }
@@ -43,10 +43,11 @@ fn main() {
         }
     }
 
-    // TODO execute algorithm VERSION
-    // TODO with parameter KNF_SAT
-
-    dbg!(knf_sat);
+    if let Ok(sat) = knf_sat {
+        algs::solve(sat, version);
+    } else if let Err(err) = knf_sat {
+        panic!("{}", err);
+    }
 }
 
 fn print_help(argc: String) {
