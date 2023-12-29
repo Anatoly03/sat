@@ -16,8 +16,33 @@ impl KnfSat {
     pub fn new() -> Self {
         Self(vec![vec![]])
     }
+}
 
-    pub fn is_solution(verify: Vec<Variable>) -> bool {
-        todo!()
+/**
+ * Algorithmic Implementations
+ */
+pub trait SatSolver {
+    type Input;
+    type Output;
+
+    /**
+     * Guess if the equation is satisfyable without finding a result
+     */
+    fn verify(&self, verifee: Self::Input) -> bool {
+        if let Some(_) = self.solve() {
+            true
+        } else {
+            false
+        }
     }
+
+    /**
+     * Find any satisfyable solution
+     */
+    fn solve(&self) -> Option<Self::Output>;
+
+    /**
+     * Find all satisfyable solutions
+     */
+    fn solve_all(&self) -> Vec<Self::Output>;
 }
