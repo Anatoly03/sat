@@ -35,7 +35,7 @@ pub trait SatSolver {
     /**
      * Guess if the equation is satisfyable without finding a result
      */
-    fn verify(&self, verifee: Self::Input) -> bool {
+    fn verify(&self, _verifee: Self::Input) -> bool {
         if let Some(_) = self.solve() {
             true
         } else {
