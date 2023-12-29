@@ -1,7 +1,14 @@
 use super::sat::KnfSat;
+use std::str::FromStr;
 
-pub fn str_to_sat(source: &String) -> KnfSat {
-    let mut knf_sat = KnfSat::new();
+impl FromStr for KnfSat {
+    type Err = String;
 
-    knf_sat
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let mut knf_sat = KnfSat::new();
+
+        todo!();
+
+        Ok(knf_sat)
+    }
 }
