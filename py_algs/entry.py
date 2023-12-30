@@ -1,3 +1,4 @@
+# from glob import glob
 import json
 import math
 import sys
@@ -51,14 +52,24 @@ def main():
                     sys.exit(1)
             case '--':
                 eq = sys.argv[idx + 1]
-                # TODO sanitize
             case '-h':
                 print_help()
                 sys.exit(0)
 
-    ls = eq_to_list(eq)
-    print(f'> {alg}, Equation(C{len(ls)}, V{varcount(ls)})')
-    subprocess.run(['python3', 'alg-' + alg + '.py', json.dumps(ls)])
+    if eq == "test":
+        f = open('tests.txt', 'r')
+        tests = f.read()
+        f.close()
+        cases = [x.split(':') for x in list(filter(lambda x : len(x) > 0 and not x.startswith('---'), tests.splitlines()))]
+
+        for case in cases:
+            # print(case)
+            # print(case[-1].strip())
+            subprocess.run(['python3', 'alg-' + alg + '.py', json.dumps(eq_to_list(case[-1].strip()))])
+    else:
+        ls = eq_to_list(eq)
+        print(f'> {alg}, Equation(C{len(ls)}, V{varcount(ls)})')
+        subprocess.run(['python3', 'alg-' + alg + '.py', json.dumps(ls)])
 
 if '--' in sys.argv:
     main()
