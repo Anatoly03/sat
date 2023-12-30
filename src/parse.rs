@@ -10,11 +10,11 @@ impl FromStr for KnfSat {
         for exp in s.split_ascii_whitespace() {
             match exp {
                 "|" => {
-                    knf_sat.0.push(Vec::new());
+                    knf_sat.eq.push(Vec::new());
                 }
                 _ => {
                     if let Ok(num) = exp.parse::<Variable>() {
-                        if let Some(block) = knf_sat.0.last_mut() {
+                        if let Some(block) = knf_sat.eq.last_mut() {
                             block.push(num);
                             continue;
                         }

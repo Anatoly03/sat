@@ -7,14 +7,18 @@ pub type Variable = isize;
  * Satisfyability in Knf
  */
 #[derive(Debug)]
-pub struct KnfSat(pub Vec<Vec<Variable>>);
+pub struct KnfSat {
+    pub eq: Vec<Vec<Variable>>
+}
 
 /**
  * Implementations
  */
 impl KnfSat {
     pub fn new() -> Self {
-        Self(vec![vec![]])
+        Self {
+            eq: vec![vec![]]
+        }
     }
 
     /**
@@ -23,7 +27,7 @@ impl KnfSat {
     pub fn flatten(&mut self) -> usize {
         let mut reference = vec![];
 
-        for clausel in &mut self.0 {
+        for clausel in &mut self.eq {
             for literal in clausel {
                 let pos = reference.iter().position(|&r| r == literal.abs());
 
