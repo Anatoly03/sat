@@ -4,7 +4,8 @@ import sys
 import subprocess
 
 algs = [
-    ('bf0', 'Brute Force (Default)')
+    ('bf0', 'Brute Force (Default)'),
+    ('3knf-bf0', 'Reduction to 3-KNF-SAT with Brute Force (Default)'),
 ]
 
 def eq_to_list(eq):
