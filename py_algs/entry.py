@@ -1,3 +1,4 @@
+import json
 import math
 import sys
 import subprocess
@@ -52,10 +53,8 @@ def main():
                 sys.exit(0)
 
     ls = eq_to_list(eq)
-
-    print(f'> {alg} -- Equation(C{len(ls)}, V{varcount(ls)})')
-            
-    subprocess.run(['python3', alg + '.py', eq])
+    print(f'> {alg}, Equation(C{len(ls)}, V{varcount(ls)})')
+    subprocess.run(['python3', alg + '.py', json.dumps(ls)])
 
 if '--' in sys.argv:
     main()

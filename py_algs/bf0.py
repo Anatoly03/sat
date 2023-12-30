@@ -1,9 +1,9 @@
-import math
+import json
 import itertools
 import sys
 
-from entry import eq_to_list, varcount
-EQ = eq_to_list(sys.argv[1:][0])
+from entry import varcount
+EQ = json.loads(sys.argv[1:][0])
 
 SOLUTIONS = 0
 
