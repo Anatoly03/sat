@@ -47,12 +47,16 @@ fn main() {
         sat.flatten();
         let mut algorithm = algs::get_algorithm(sat, version);
         algorithm.optimise();
-        let solutions = algorithm.solve_all();
+        let solutions = algorithm.solve();
 
-        for a in &solutions {
-            print!("{:?} ", a);
+        if let Some(solution) = solutions {
+            for a in solution {
+                print!("{:?} ", a);
+            }
+            println!();
+        } else {
+            println!("\nNo Solutions");
         }
-        println!("\nSolutions: {}", solutions.len());
     } else if let Err(err) = knf_sat {
         panic!("{}", err);
     }

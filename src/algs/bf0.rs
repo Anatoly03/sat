@@ -20,7 +20,9 @@ impl SatSolver for BruteForce {
     }
 
     fn solve(&self) -> Option<Vec<Variable>> {
-        todo!()
+        let variables = self.sat.varsize();
+
+        None
     }
 
     fn solve_all(&self) -> Vec<Vec<Variable>> {

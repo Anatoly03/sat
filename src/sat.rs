@@ -8,7 +8,7 @@ pub type Variable = isize;
  */
 #[derive(Debug)]
 pub struct KnfSat {
-    pub eq: Vec<Vec<Variable>>
+    pub eq: Vec<Vec<Variable>>,
 }
 
 /**
@@ -43,6 +43,25 @@ impl KnfSat {
                 } else {
                     *literal = -new_val;
                 }
+            }
+        }
+
+        reference.len()
+    }
+
+    /**
+     * Counter of Variables in the equation
+     */
+    pub fn varsize(&self) -> usize {
+        let mut reference = vec![];
+
+        for clausel in &self.eq {
+            for literal in clausel {
+                let pos = reference.iter().position(|&r| r == literal.abs());
+
+                if let None = pos {
+                    reference.push((literal).abs());
+                };
             }
         }
 
