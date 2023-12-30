@@ -54,7 +54,7 @@ def main():
 
     ls = eq_to_list(eq)
     print(f'> {alg}, Equation(C{len(ls)}, V{varcount(ls)})')
-    subprocess.run(['python3', alg + '.py', json.dumps(ls)])
+    subprocess.run(['python3', 'alg-' + alg + '.py', json.dumps(ls)])
 
 if '--' in sys.argv:
     main()
