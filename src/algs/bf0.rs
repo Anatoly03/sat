@@ -4,17 +4,22 @@ use crate::sat::{SatSolver, Variable, KnfSat};
  * Algorithm: Brute Force
  * Complexity: Exponential
  */
-pub type BruteForce = KnfSat;
+pub struct BruteForce {
+    sat: KnfSat
+}
 
 impl SatSolver for BruteForce {
-    type Input = Vec<Variable>;
-    type Output = Vec<Variable>;
+    fn new(sat: KnfSat) -> Self {
+        BruteForce {
+            sat
+        }
+    }
 
-    fn solve(&self) -> Option<Self::Output> {
+    fn solve(&self) -> Option<Vec<Variable>> {
         todo!()
     }
 
-    fn solve_all(&self) -> Vec<Self::Output> {
+    fn solve_all(&self) -> Vec<Vec<Variable>> {
         todo!()
     }
 }

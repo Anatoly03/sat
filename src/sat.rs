@@ -22,8 +22,10 @@ impl KnfSat {
  * Algorithmic Implementations
  */
 pub trait SatSolver {
-    type Input; //= Vec<Variable>;
-    type Output; // = Vec<Variable>;
+    /**
+     * Create new instance
+     */
+    fn new(_s: KnfSat) -> Self;
 
     /**
      * Optimise Equation so solving it becomes easier.
@@ -35,7 +37,7 @@ pub trait SatSolver {
     /**
      * Guess if the equation is satisfyable without finding a result
      */
-    fn verify(&self, _verifee: Self::Input) -> bool {
+    fn verify(&self, _verifee: Vec<Variable>) -> bool {
         if let Some(_) = self.solve() {
             true
         } else {
@@ -46,10 +48,10 @@ pub trait SatSolver {
     /**
      * Find any satisfyable solution
      */
-    fn solve(&self) -> Option<Self::Output>;
+    fn solve(&self) -> Option<Vec<Variable>>;
 
     /**
      * Find all satisfyable solutions
      */
-    fn solve_all(&self) -> Vec<Self::Output>;
+    fn solve_all(&self) -> Vec<Vec<Variable>>;
 }

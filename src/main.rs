@@ -4,7 +4,7 @@ mod sat;
 #[cfg(test)]
 mod test;
 
-use sat::KnfSat;
+use sat::{KnfSat, SatSolver};
 use std::{env, str::FromStr};
 
 fn main() {
@@ -44,7 +44,12 @@ fn main() {
     }
 
     if let Ok(sat) = knf_sat {
-        algs::solve(sat, version);
+        let algorithm = algs::get_algorithm(sat, version);
+        let solutions = algorithm.solve_all();
+        for a in &solutions {
+            print!("{:?} ", a);
+        }
+        println!("\nSolutions: {}", solutions.len());
     } else if let Err(err) = knf_sat {
         panic!("{}", err);
     }
