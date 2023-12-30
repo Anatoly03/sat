@@ -9,16 +9,9 @@ SOLUTIONS = 0
 
 def solve(EQC, verify, mode):
     if isinstance(EQC, int):
-        # print(f"{EQC} * {verify} = {EQC * verify[abs(EQC) - 1] > 0}")
         return EQC * verify[abs(EQC) - 1] > 0
     
     return mode([solve(clause, verify, any) for clause in EQC])
-
-    # for clause in EQC:
-    #     if not solve(clause, verify):
-    #         return False
-
-    # return True
 
 for verify in itertools.product((-1, +1), repeat=varcount(EQ)):
     if solve(EQ.copy(), verify, all):
