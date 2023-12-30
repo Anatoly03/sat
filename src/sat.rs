@@ -16,6 +16,34 @@ impl KnfSat {
     pub fn new() -> Self {
         Self(vec![vec![]])
     }
+
+    /**
+     * Rename variables to tightly cover [1 .. output]
+     */
+    pub fn flatten(&mut self) -> usize {
+        let mut reference = vec![];
+
+        for clausel in &mut self.0 {
+            for literal in clausel {
+                let pos = reference.iter().position(|&r| r == literal.abs());
+
+                let new_val: Variable = if let Some(p) = pos {
+                    p as Variable + 1
+                } else {
+                    reference.push((literal).abs());
+                    reference.len() as Variable
+                };
+
+                if literal > &mut 0 {
+                    *literal = new_val;
+                } else {
+                    *literal = -new_val;
+                }
+            }
+        }
+
+        reference.len()
+    }
 }
 
 /**
@@ -28,11 +56,9 @@ pub trait SatSolver {
     fn new(_s: KnfSat) -> Self;
 
     /**
-     * Optimise Equation so solving it becomes easier.
+     * Optimise Equation so solving it becomes easier to solve
      */
-    fn optimise(&mut self) {
-        
-    }
+    fn optimise(&mut self) {}
 
     /**
      * Guess if the equation is satisfyable without finding a result

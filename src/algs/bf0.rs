@@ -15,6 +15,10 @@ impl SatSolver for BruteForce {
         }
     }
 
+    fn optimise(&mut self) {
+    
+    }
+
     fn solve(&self) -> Option<Vec<Variable>> {
         todo!()
     }
