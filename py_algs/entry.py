@@ -34,6 +34,9 @@ def eq_to_list(eq):
 def varcount(eq_list):
     return max([abs(v) for clauses in eq_list for v in clauses])
 
+def print_help():
+    pass
+
 def main():
     alg = 'bf0'
     eq = '1 | 2 | 3'
@@ -43,14 +46,14 @@ def main():
         match arg:
             case '-v':
                 alg = sys.argv[idx + 1]
-                # TODO sanitize
-                break
+                if alg not in [a[0] for a in algs]:
+                    print(f"Algorithm {alg} does not exist. See -h for which algorithms can be used.")
+                    sys.exit(1)
             case '--':
                 eq = sys.argv[idx + 1]
                 # TODO sanitize
-                break
             case '-h':
-                print('TODO Help Message') # TODO
+                print_help()
                 sys.exit(0)
 
     ls = eq_to_list(eq)
