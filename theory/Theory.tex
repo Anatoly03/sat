@@ -13,14 +13,14 @@
     \section{Definitions}
 
     \begin{description}
-        \item[Boolean Function.] {
+        \item[BOOL] {
+            \emph{Boolean Function.}
             A boolean function $f: V \subseteq Variables \rightarrow
             \{0, 1\}$ with truthy sets $P \subseteq \mathcal{P}(Variables)$
             yields $1$ if $V \in P$, else yields $0$.
         }
         \item[SAT] {
             \emph{Boolean Satisfyability Equation.}
-
             We define a boolean formula by the following context-free
             grammar with start variable $S$, a given variable set
             $Variable = \{x_i : i \in [n-1]\}$ of $n$ variables and a
@@ -38,21 +38,24 @@
             \end{tabular}
         }
         \item[CNF] {
-            \emph{Unmixed conjunctive normal form.}
+            \emph{Unmixed conjunctive normal form.} We define a boolean
+            formula in conjunctive normal form by the following context-
+            free grammar with start variable $S$ and a given variable
+            set $Variable = \{x_i : i \in [n-1]\}$ of $n$ variables.
 
-            We define a boolean formula in conjunctive normal form by
-            the following context-free grammar with start variable $S$
-            and a given variable set $Variable = \{x_i : i \in [n-1]\}$
-            of $n$ variables.
-
-            \begin{tabular}{ccc}
-                $S$ & $\rightarrow$& $(Disjunction)$ \\ 
+            \begin{tabular}{cccc}
+                $S$ & $\rightarrow$& $(Disjunction)$ & \small{Short:} $\mathbf{S}: \{D\}$  \\ 
                 $S$ & $\rightarrow$& $S \cdot (Disjunction)$ \\ 
-                $Disjunction$ & $\rightarrow$& $Literal$ \\ 
+                $Disjunction$ & $\rightarrow$& $Literal$ & \small{Short:} $\mathbf{D}: \{X\}$ \\ 
                 $Disjunction$ & $\rightarrow$& $Disjunction + Literal$ \\ 
-                $Literal$ & $\rightarrow$& $Variable$ \\ 
+                $Literal$ & $\rightarrow$& $Variable$ & \small{Short:} $\mathbf{L}: x_i$ \\ 
                 $Literal$ & $\rightarrow$& $\lnot Variable$ \\ 
             \end{tabular}
+
+            The notation $a\cdot\overline b + b \cdot\overline c \cdot
+            \overline d + \overline a \cdot\overline c$ will be used as 
+            a set of literal sets $\{\{a, \lnot b\}, \{b, \lnot c,
+            \lnot d\}, \{\lnot a, \lnot b\}\}$ in this paper.
         }
     \end{description}
 
@@ -64,19 +67,28 @@
             \emph{CNF-SAT} formula, we call it $unmixed$, if
             every disjunction consists of either positive or 
             negated literals.
+
+            A polynomial time reduction $SAT \leq_p U-SAT$
+            for an equation $S_E \rightarrow U_E$ would be:
+
+            \[\forall D \in S:\]
+
+            TODO De Morgan
         }
         \item[3-CNF-SAT] {
-            \emph{Unmixed conjunctive normal form.} Given a
-            \emph{CNF-SAT} formula, we call it $unmixed$, if
-            every disjunction consists of either positive or 
-            negated literals.
+            \emph{Three-literals conjunctive normal form.} Given a
+            \emph{CNF-SAT} formula, we call it $n-SAT$, if
+            every disjunction consists of exactly $n$-literals.
             
-            TODO
+            TODO Proof
         }
         \item[U3-SAT] {
-            A formula that is \emph{unmixed} and in \emph{}
+            \emph{Three-literals unmixed conjunctive normal form.}
+            Given a \emph{CNF-SAT} formula, we call it $U3-SAT$, if
+            it is $unmixed$ and every disjunction consists of
+            exactly $3$-literals.
             
-            TODO
+            TODO 
         }
     \end{description}
 
