@@ -6,62 +6,88 @@
 \title{Sat Solver Optimisations}
 \author{Anatoly Weinstein}
 \begin{document}
-\maketitle
-This document contains research into optimisations of 3-KNF-SAT problems.
+    \maketitle
 
-\section{Definitions}
+    This document contains research into optimisations of CNF-SAT problems.
 
-\begin{description}
-    \item[Boolean Function.] {
-        A boolean function $f: V \subseteq Variables \rightarrow
-        \{0, 1\}$ with truthy sets $P \subseteq \mathcal{P}(Variables)$
-        yields $1$ if $V \in P$, else yields $0$.
-    }
-    \item[Boolean Equation.] {
-        We define a boolean formula by the following context-free
-        grammar with start variable $S$, a given variable set
-        $Variable = \{x_i : i \in [n-1]\}$ of $n$ variables and a
-        set of binary operations $Operation = \{\cdot, +, \oplus,
-        \dots\}$ and an assigned boolean function $f_{Operation}
-        : \mathcal{P} \subseteq \{L, R\} \rightarrow \{0, 1\}$,
-        where $L$ and $R$ is the truthiness of left and right 
-        respectively.
+    \section{Definitions}
 
-        \begin{tabular}{ccc}
-            $S$ & $\rightarrow$& $(S)$ \\ 
-            $S$ & $\rightarrow$& $S\ Operation\ S$ \\ 
-            $S$ & $\rightarrow$& $\lnot S$ \\ 
-            $S$ & $\rightarrow$& $Variable$ \\ 
-           \end{tabular}
-    }
-    \item[Conjunctive normal form.] {
-        We define a boolean formula in conjunctive normal form by
-        the following context-free grammar with start variable $S$
-        and a given variable set $Variable = \{x_i : i \in [n-1]\}$
-        of $n$ variables.
+    \begin{description}
+        \item[Boolean Function.]
 
-        \begin{tabular}{ccc}
-            $S$ & $\rightarrow$& $(Disjunction)$ \\ 
-            $S$ & $\rightarrow$& $S \cdot (Disjunction)$ \\ 
-            $Disjunction$ & $\rightarrow$& $Literal$ \\ 
-            $Disjunction$ & $\rightarrow$& $Disjunction + Literal$ \\ 
-            $Literal$ & $\rightarrow$& $Variable$ \\ 
-            $Literal$ & $\rightarrow$& $\lnot Variable$ \\ 
-           \end{tabular}
-    }
-\end{description}
-
-\section{Optimisation Techniques}
-
-\begin{description}
-    \item[Contradiction] {
-        A formula with contradictional disjunctions
-        is not satisfiable.
+            A boolean function $f: V \subseteq Variables \rightarrow
+            \{0, 1\}$ with truthy sets $P \subseteq \mathcal{P}(Variables)$
+            yields $1$ if $V \in P$, else yields $0$.
         
-        \[\forall A : X \cdot \lnot X \cdot A(X) = \bot \]
-    }
-    \item[Something long] {
-        hi
-    }
- \end{description}
+        \item[Boolean Equation.]
+
+            We define a boolean formula by the following context-free
+            grammar with start variable $S$, a given variable set
+            $Variable = \{x_i : i \in [n-1]\}$ of $n$ variables and a
+            set of binary operations $Operation = \{\cdot, +, \oplus,
+            \dots\}$ and an assigned boolean function $f_{Operation}
+            : \mathcal{P} \subseteq \{L, R\} \rightarrow \{0, 1\}$,
+            where $L$ and $R$ is the truthiness of left and right 
+            respectively.
+
+            \begin{tabular}{ccc}
+                $S$ & $\rightarrow$& $(S)$ \\ 
+                $S$ & $\rightarrow$& $S\ Operation\ S$ \\ 
+                $S$ & $\rightarrow$& $\lnot S$ \\ 
+                $S$ & $\rightarrow$& $Variable$ \\ 
+            \end{tabular}
+        
+        \item[Conjunctive normal form.]
+
+            We define a boolean formula in conjunctive normal form by
+            the following context-free grammar with start variable $S$
+            and a given variable set $Variable = \{x_i : i \in [n-1]\}$
+            of $n$ variables.
+
+            \begin{tabular}{ccc}
+                $S$ & $\rightarrow$& $(Disjunction)$ \\ 
+                $S$ & $\rightarrow$& $S \cdot (Disjunction)$ \\ 
+                $Disjunction$ & $\rightarrow$& $Literal$ \\ 
+                $Disjunction$ & $\rightarrow$& $Disjunction + Literal$ \\ 
+                $Literal$ & $\rightarrow$& $Variable$ \\ 
+                $Literal$ & $\rightarrow$& $\lnot Variable$ \\ 
+            \end{tabular}
+        
+    \end{description}
+
+    \section{Transformation Techniques}
+
+    \begin{description}
+
+        \item[UCNF-SAT.]
+            \textit{Unmixed conjunctive normal form.}
+
+            TODO
+
+        \item[3-CNF-SAT.]
+            A formula with only three literals per disjunction.
+            
+            TODO
+
+    \end{description}
+
+    \section{Optimisation Techniques}
+
+    \begin{description}
+
+        \item[Contradiction.]
+
+            A formula with contradictional disjunctions
+            is not satisfiable.
+            
+            \[\forall A : X \cdot \lnot X \cdot A(X) = \bot \]
+        
+        \item[Common Literals.]
+
+            A formula with common literals
+            is not satisfiable.
+            
+            \[\forall A : X \cdot \lnot X \cdot A(X) = \bot \]
+        
+    \end{description}
 \end{document}
