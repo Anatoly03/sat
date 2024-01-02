@@ -1,2 +1,21 @@
+# Compilations
 /target
 py_algs/__pycache__
+
+# Latex
+*.aux
+*.blg
+*.bbl
+*.dvi
+*.fdb_latexmk
+*.fls
+*.idx
+*.ind
+*.ilg
+*.log
+*.lov
+*.lot
+*.out
+*.tmp
+*.toc
+*.synctex.gz
