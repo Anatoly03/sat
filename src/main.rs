@@ -1,4 +1,3 @@
-mod algs;
 mod parse;
 mod sat;
 #[cfg(test)]
@@ -44,7 +43,7 @@ fn main() {
     }
 
     if let Ok(mut sat) = knf_sat {
-        let mut algorithm = algs::get_algorithm(sat, version);
+        let mut algorithm = sat::alg::get_algorithm(sat, version);
         // let solutions = algorithm.solve();
 
         // if let Some(solution) = solutions {

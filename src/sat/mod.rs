@@ -1,3 +1,9 @@
+pub mod alg;
+pub mod bf0;
+pub mod flatten;
+pub mod knf3;
+pub mod varsize;
+
 /**
  * A Variable is denoted as a non-zero number with negatives implying negations of the variable.
  */

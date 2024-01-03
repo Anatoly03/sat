@@ -1,9 +1,4 @@
-pub mod bf0;
-pub mod flatten;
-pub mod knf3;
-pub mod varsize;
-
-use super::sat::{CanSolveSat, SolveSat, SolveAllSat, KnfSat};
+use crate::sat::{CanSolveSat, SolveSat, SolveAllSat, KnfSat};
 
 pub struct Algorithm {
     pub name: String,
