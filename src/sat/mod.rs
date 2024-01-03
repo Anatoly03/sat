@@ -1,5 +1,3 @@
-pub mod knf_sat;
-
 /**
  * A Variable is denoted as a non-zero number with negatives implying negations of the variable.
  */
@@ -32,3 +30,12 @@ pub type SolveSat = dyn Fn(KnfSat) -> Vec<Variable>;
  * SatSolver
  */
 pub type SolveAllSat = dyn Fn(KnfSat) -> Vec<Vec<Variable>>;
+
+/**
+ * Implementations
+ */
+impl KnfSat {
+    pub fn new() -> Self {
+        Self { eq: vec![vec![]] }
+    }
+}

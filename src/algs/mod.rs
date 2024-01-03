@@ -1,5 +1,7 @@
 pub mod bf0;
+pub mod flatten;
 pub mod knf3;
+pub mod varsize;
 
 // pub fn get_algorithm<T: SatSolver>(sat: KnfSat, alg: u8) -> T {
 //     match alg {
