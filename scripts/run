@@ -1,3 +1,0 @@
-#!/bin/sh
-set -x
-python3 entry.py -- "$2" -v $1
