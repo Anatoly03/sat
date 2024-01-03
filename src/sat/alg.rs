@@ -1,4 +1,4 @@
-use crate::sat::{CanSolveSat, SolveSat, SolveAllSat, KnfSat};
+use crate::sat::{CanSolveSat, SolveAllSat, SolveSat};
 
 pub struct Algorithm {
     pub name: String,
@@ -7,14 +7,25 @@ pub struct Algorithm {
     pub solve_all: Option<Box<SolveAllSat>>,
 }
 
-pub fn get_algorithm(sat: KnfSat, alg: u8) -> Algorithm {
-    match alg {
-        0 => return Algorithm {
+impl Algorithm {
+    pub fn new() -> Self {
+        Self {
             name: "(Default) Brute Force".to_string(),
             satisfiable: None,
             solve: None,
             solve_all: None,
-        },
-        _ => panic!("Version {} does not exist. Use `-h` option to see which do.", alg)
+        }
+    }
+}
+
+pub fn get_algorithm(alg: u8) -> Option<Algorithm> {
+    match alg {
+        0 => Some(Algorithm {
+            name: "(Default) Brute Force".to_string(),
+            satisfiable: None,
+            solve: None,
+            solve_all: None,
+        }),
+        _ => None,
     }
 }

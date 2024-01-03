@@ -1,5 +1,5 @@
-use std::str::FromStr;
-use super::KnfSat;
+// use std::str::FromStr;
+// use super::KnfSat;
 
 #[test]
 fn test_add() {
