@@ -44,10 +44,7 @@ fn main() {
     }
 
     if let Ok(mut sat) = knf_sat {
-        // sat.flatten();
-        // TODO
-        // let mut algorithm = algs::get_algorithm(sat, version);
-        // algorithm.optimise();
+        let mut algorithm = algs::get_algorithm(sat, version);
         // let solutions = algorithm.solve();
 
         // if let Some(solution) = solutions {
