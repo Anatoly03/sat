@@ -1,6 +1,6 @@
 # Compilations
 /target
-py_algs/__pycache__
+*cache*
 
 # Latex
 *.aux
