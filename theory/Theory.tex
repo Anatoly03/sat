@@ -108,14 +108,14 @@
     \section{Optimisation Techniques}
 
     \begin{description}
-        \item[1L] {
+        \item[Zugzwang.] {
             \emph{Common Literals.}
             If a disjunction consists of one literal, the value of
             this literal is fixed.
             
             \[S = X \cdot A(X) \rightarrow \left(f_{SAT}(Y) \Rightarrow X \in Y \right) \]
         }
-        \item[CONTR-D]
+        \item[Contradiction.]
         {
             \emph{Contradictional Disjunctions.}
 
@@ -151,6 +151,15 @@
                     && \multicolumn{2}{c} B \\
                 \end{tabular}
             \end{center}
+        }
+        \item[Connected Component.] {
+            \emph{Two independent sets of variables.}
+            If there exists two sets of variables $A$ and $B$, such that
+            $\forall a \in A, b \in B \not\exists D: a \in D \land b \in D$,
+            then you can create two equations as following and solve them
+            independently with reduced variable count.
+
+            \[\forall V \in \{A, B\}: S_V =\{d\in D\ \forall\ l \in d:\ l \in V\}\]
         }
     \end{description}
 \end{document}
