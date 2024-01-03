@@ -1,0 +1,92 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage[english]{babel}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{listings}
+
+\title{Storing Knf Equations}
+\author{Anatoly Weinstein}
+
+\begin{document}
+
+    \maketitle
+
+    This document contains information, such as magic bytes
+	and grammars, about how SAT equations will be stored in
+	this program.
+
+    \section{Human Readable SAT \texttt{.hsat}}
+
+    \begin{description}
+		\item[Magic Bytes] {
+        	The file starts with the bytes \texttt{HSAT}
+        }
+        \item[Grammar] {
+        	Contains a general unformated equation.
+
+			\texttt {
+				\textcolor{blue}{S} $\rightarrow$ SAT\string( \textcolor{blue}{EQ} \string) \\
+				\textcolor{blue}{EQ} $\rightarrow$ \textcolor{blue}{BINOP}\string( \textcolor{blue}{EQ}, \textcolor{blue}{EQ} \string) \textcolor{blue}{|} NOT\string( \textcolor{blue}{EQ} \string) \\
+				\textcolor{blue}{EQ} $\rightarrow$ \textcolor{blue}{NUM} \textcolor{blue}{|} T \textcolor{blue}{|} F \\
+				\textcolor{blue}{BINOP} $\rightarrow$ AND \textcolor{blue}{|} OR \textcolor{blue}{|} XOR \textcolor{blue}{|} NOR \\
+			}
+        }
+    \end{description}
+
+    \section{Human Readable CNF-SAT \texttt{.hcnf}}
+
+    \begin{description}
+		\item[Magic Bytes] {
+        	The file starts with the bytes \texttt{HCNF}
+        }
+        \item[Grammar] {
+        	Contains a general unformated equation.
+
+			TODO
+        }
+    \end{description}
+
+    \section{Compressed CNF-SAT \texttt{.cnf}}
+
+    \begin{description}
+		\item[Magic Bytes] {
+        	The file starts with the bytes \texttt{CNF}
+        }
+		\item[Dimension Bytes] {
+			The following two bytes specify the size of
+			disjunctions and variable storage.
+
+        	The first magic byte specifies the size of
+			variables in bytes. (1 byte stores up to 127
+			different variables, 2 bytes up to 32,767 
+			different variables.)
+
+			The following magic byte specifies the size
+			of a disjunction magic bytes. (1 byte allows
+			up to 255 variables per disjunction. 2 bytes
+			up to 65,536 different variables per
+			disjunction)
+        }
+
+		\item[\ldots Iteration] {
+			The rest of the document are iterations over
+			disjunctions.
+
+			\begin{description}
+				\item[Disjunction Size] {
+					Specifies how many variables will
+					follow. Size of this magic byte is
+					specified in the header.
+				} 
+				\item[\ldots Variables] {
+					Byte String of Variables, every
+					variables size is specified in the
+					headers. The first bit specifies if
+					the variable is negated.
+				} 
+			\end{description}
+        }
+    \end{description}
+
+	
+\end{document}
