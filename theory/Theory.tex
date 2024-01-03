@@ -4,6 +4,7 @@
 \usepackage{amsfonts}
 \usepackage[table]{xcolor} % http://ctan.org/pkg/xcolor
 \usepackage{hhline}
+\usepackage{multirow}
 
 \title{Sat Solver Optimisations}
 \author{Anatoly Weinstein}
@@ -139,7 +140,7 @@
             \end{center}
         }
         \item[Common Literals.] {
-            \emph{Disjunction with common part.}
+            \emph{Disjunction with common positive part.}
             
             \[ (A + B) \cdot (A + C) \cdot X = (A + B C) \cdot X\]
 
@@ -148,6 +149,24 @@
                     & \multicolumn{2}{c} A \\ \cline{2-3} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{4}{-}}
                     \multicolumn{1}{c||} C & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {} \\ \hhline{~|*{4}{-}}
                     \multicolumn{1}{c|} {} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {} & \multicolumn{1}{c|} {} \\ \cline{2-5} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \cline{3-4}
+                    && \multicolumn{2}{c} B \\
+                \end{tabular}
+            \end{center}
+        }
+        \item[Common Literals and Contradictional Part.] {
+            \emph{Disjunction with positive and negative common parts.}
+            
+            \[ (A + B + C) \cdot (A + \lnot B + D) \cdot X\]
+
+            TODO
+
+            \begin{center}
+                \begin{tabular}{lccccr}
+                    & \multicolumn{2}{c} A \\ \cline{2-3} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{4}{-}}
+                    \multicolumn{1}{l||} {\multirow{2}{*}{C}} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {} & \multicolumn{1}{c|} {\cellcolor{blue!15}} \\ \hhline{~|*{4}{-}}
+                    \multicolumn{1}{l||}{} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c} {\cellcolor{blue!15}} & \multicolumn{1}{||r} {\multirow{2}{*}{D}} \\ \hhline{~|*{4}{-}}
+                    \multicolumn{1}{l|}{} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c} {} & \multicolumn{1}{||r}{} \\ \hhline{~|*{4}{-}}
+                    \multicolumn{1}{l|}{} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {} & \multicolumn{1}{c|} {} \\ \cline{2-5} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \cline{3-4}
                     && \multicolumn{2}{c} B \\
                 \end{tabular}
             \end{center}
