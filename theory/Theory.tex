@@ -2,6 +2,8 @@
 \usepackage[english]{babel}
 \usepackage{MnSymbol}
 \usepackage{amsfonts}
+\usepackage[table]{xcolor} % http://ctan.org/pkg/xcolor
+\usepackage{hhline}
 
 \title{Sat Solver Optimisations}
 \author{Anatoly Weinstein}
@@ -10,14 +12,22 @@
 
     This document contains research into optimisations of CNF-SAT problems.
 
+    % \begin{description}
+    %     \item[S] A equation in $CNF-SAT$, consisting of disjunctions $D$
+    %     \item[D] A equation in $CNF-SAT$, consisting of literals $L$
+    %     \item[L] A variable literal taking either $0$ or $1$
+    %     \item[E] A variable literal taking either $0$ or $1$
+    % \end{description}
+
     \section{Definitions}
 
     \begin{description}
         \item[BOOL] {
             \emph{Boolean Function.}
             A boolean function $f: V \subseteq Variables \rightarrow
-            \{0, 1\}$ with truthy sets $P \subseteq \mathcal{P}(Variables)$
-            yields $1$ if $V \in P$, else yields $0$.
+            \{\bot, \top\}$ with truthy sets $P \subseteq \mathcal{P}
+            (Variables)$ yields $\top$ (truthy) if $V \in P$, else
+            yields $\bot$ (falsy).
         }
         \item[SAT] {
             \emph{Boolean Satisfyability Equation.}
@@ -26,7 +36,7 @@
             $Variable = \{x_i : i \in [n-1]\}$ of $n$ variables and a
             set of binary operations $Operation = \{\cdot, +, \oplus,
             \dots\}$ and an assigned boolean function $f_{Operation}
-            : \mathcal{P} \subseteq \{L, R\} \rightarrow \{0, 1\}$,
+            : \mathcal{P} \subseteq \{L, R\} \rightarrow \{\bot, \top\}$,
             where $L$ and $R$ is the truthiness of left and right 
             respectively.
 
@@ -36,6 +46,9 @@
                 $S$ & $\rightarrow$& $\lnot S$ \\ 
                 $S$ & $\rightarrow$& $Variable$ \\ 
             \end{tabular}
+
+            The \emph{boolean equation} is satisfied with interpretation
+            $P$, if there is an interpretation $X$ with $f_{SAT}(X) = \top$.
         }
         \item[CNF] {
             \emph{Unmixed conjunctive normal form.} We define a boolean
@@ -52,8 +65,8 @@
                 $Literal$ & $\rightarrow$& $\lnot Variable$ \\ 
             \end{tabular}
 
-            The notation $a\cdot\overline b + b \cdot\overline c \cdot
-            \overline d + \overline a \cdot\overline c$ will be used as 
+            The notation $(a+\overline b) \cdot (b +\overline c +
+            \overline d) \cdot (\overline a +\overline c)$ will be used as 
             a set of literal sets $\{\{a, \lnot b\}, \{b, \lnot c,
             \lnot d\}, \{\lnot a, \lnot b\}\}$ in this paper.
         }
@@ -94,19 +107,50 @@
 
     \section{Optimisation Techniques}
 
-    \begin{description} {
-        \item[Contradiction.]
+    \begin{description}
+        \item[1L] {
+            \emph{Common Literals.}
+            If a disjunction consists of one literal, the value of
+            this literal is fixed.
+            
+            \[S = X \cdot A(X) \rightarrow \left(f_{SAT}(Y) \Rightarrow X \in Y \right) \]
+        }
+        \item[CONTR-D]
+        {
+            \emph{Contradictional Disjunctions.}
 
             A formula with contradictional disjunctions
             is not satisfiable.
             
             \[\forall A : X \cdot \lnot X \cdot A(X) = \bot \]
         }
-        \item[Common Literals.] {
-            A formula with common literals
-            is not satisfiable.
+        \item[Common Contradicting Literals.] {
+            \emph{Disjunction with common contradictional part.}
             
-            \[\forall A : X \cdot \lnot X \cdot A(X) = \bot \]
+            \[ (A + B) \cdot (\lnot A + C) \cdot X = (AC + B \overline A) \cdot X\]
+
+            \begin{center}
+                \begin{tabular}{lcccc}
+                    & \multicolumn{2}{c} A \\ \cline{2-3} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{4}{-}}
+                    \multicolumn{1}{c||} C & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {} \\ \hhline{~|*{4}{-}}
+                    \multicolumn{1}{c|} {} & \multicolumn{1}{c|} {} & \multicolumn{1}{c|} {} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {} \\ \cline{2-5} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \cline{3-4}
+                    && \multicolumn{2}{c} B \\
+                \end{tabular}
+            \end{center}
+        }
+        \item[Common Literals.] {
+            \emph{Disjunction with common part.}
+            
+            \[ (A + B) \cdot (A + C) \cdot X = (A + B C) \cdot X\]
+
+            \begin{center}
+                \begin{tabular}{lcccc}
+                    & \multicolumn{2}{c} A \\ \cline{2-3} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{4}{-}}
+                    \multicolumn{1}{c||} C & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {} \\ \hhline{~|*{4}{-}}
+                    \multicolumn{1}{c|} {} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {} & \multicolumn{1}{c|} {} \\ \cline{2-5} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \cline{3-4}
+                    && \multicolumn{2}{c} B \\
+                \end{tabular}
+            \end{center}
         }
     \end{description}
 \end{document}
