@@ -14,7 +14,7 @@ pub struct KnfSat {
 /**
  * Transformation
  */
-pub type TransformSat = dyn Fn(KnfSat) -> KnfSat;
+// TODO pub type TransformSat = dyn Fn(KnfSat) -> KnfSat;
 
 /**
  * SatSolver satisfyability
