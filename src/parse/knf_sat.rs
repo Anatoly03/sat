@@ -1,9 +1,12 @@
-use super::sat::{KnfSat, Variable};
+use crate::sat::{KnfSat, Variable};
 use std::str::FromStr;
 
 impl FromStr for KnfSat {
     type Err = String;
 
+    /**
+     * Convert Human Readable Equation String to CNF Sat
+     */
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let mut knf_sat = KnfSat::new();
 
