@@ -8,7 +8,9 @@
 
 \title{Sat Solver Optimisations}
 \author{Anatoly Weinstein}
+
 \begin{document}
+
     \maketitle
 
     This document contains research into optimisations of CNF-SAT problems.
@@ -23,15 +25,13 @@
     \section{Definitions}
 
     \begin{description}
-        \item[BOOL] {
-            \emph{Boolean Function.}
+        \item[Boolean Function.] {
             A boolean function $f: V \subseteq Variables \rightarrow
             \{\bot, \top\}$ with truthy sets $P \subseteq \mathcal{P}
             (Variables)$ yields $\top$ (truthy) if $V \in P$, else
             yields $\bot$ (falsy).
         }
-        \item[SAT] {
-            \emph{Boolean Satisfyability Equation.}
+        \item[Boolean Satisfyability Equation.] {
             We define a boolean formula by the following context-free
             grammar with start variable $S$, a given variable set
             $Variable = \{x_i : i \in [n-1]\}$ of $n$ variables and a
@@ -41,12 +41,14 @@
             where $L$ and $R$ is the truthiness of left and right 
             respectively.
 
-            \begin{tabular}{ccc}
-                $S$ & $\rightarrow$& $(S)$ \\ 
-                $S$ & $\rightarrow$& $S\ Operation\ S$ \\ 
-                $S$ & $\rightarrow$& $\lnot S$ \\ 
-                $S$ & $\rightarrow$& $Variable$ \\ 
-            \end{tabular}
+            \begin{center}
+                \begin{tabular}{ccc}
+                    $S$ & $\rightarrow$& $(S)$ \\ 
+                    $S$ & $\rightarrow$& $S\ Operation\ S$ \\ 
+                    $S$ & $\rightarrow$& $\lnot S$ \\ 
+                    $S$ & $\rightarrow$& $Variable$ \\ 
+                \end{tabular}
+            \end{center}
 
             The \emph{boolean equation} is satisfied with interpretation
             $P$, if there is an interpretation $X$ with $f_{SAT}(X) = \top$.
@@ -57,18 +59,20 @@
             free grammar with start variable $S$ and a given variable
             set $Variable = \{x_i : i \in [n-1]\}$ of $n$ variables.
 
-            \begin{tabular}{cccc}
-                $S$ & $\rightarrow$& $(Disjunction)$ & \small{Short:} $\mathbf{S}: \{D\}$  \\ 
-                $S$ & $\rightarrow$& $S \cdot (Disjunction)$ \\ 
-                $Disjunction$ & $\rightarrow$& $Literal$ & \small{Short:} $\mathbf{D}: \{X\}$ \\ 
-                $Disjunction$ & $\rightarrow$& $Disjunction + Literal$ \\ 
-                $Literal$ & $\rightarrow$& $Variable$ & \small{Short:} $\mathbf{L}: x_i$ \\ 
-                $Literal$ & $\rightarrow$& $\lnot Variable$ \\ 
-            \end{tabular}
+            \begin{center}
+                \begin{tabular}{cccc}
+                    $S$ & $\rightarrow$& $(Disjunction)$ & \small{Short:} $\mathbf{S}: \{D\}$  \\ 
+                    $S$ & $\rightarrow$& $S \cdot (Disjunction)$ \\ 
+                    $Disjunction$ & $\rightarrow$& $Literal$ & \small{Short:} $\mathbf{D}: \{X\}$ \\ 
+                    $Disjunction$ & $\rightarrow$& $Disjunction + Literal$ \\ 
+                    $Literal$ & $\rightarrow$& $Variable$ & \small{Short:} $\mathbf{L}: x_i$ \\ 
+                    $Literal$ & $\rightarrow$& $\lnot Variable$ \\ 
+                \end{tabular}
+            \end{center}
 
             The notation $(a+\overline b) \cdot (b +\overline c +
             \overline d) \cdot (\overline a +\overline c)$ will be used as 
-            a set of literal sets $\{\{a, \lnot b\}, \{b, \lnot c,
+            type ``set of literal sets'' $\{\{a, \lnot b\}, \{b, \lnot c,
             \lnot d\}, \{\lnot a, \lnot b\}\}$ in this paper.
         }
     \end{description}
@@ -156,9 +160,7 @@
         \item[Common Literals and Contradictional Part.] {
             \emph{Disjunction with positive and negative common parts.}
             
-            \[ (A + B + C) \cdot (A + \lnot B + D) \cdot X\]
-
-            TODO
+            \[ (A + B + C) \cdot (A + \lnot B + D) \cdot X = (A + BD + C \overline B) \cdot X\]
 
             \begin{center}
                 \begin{tabular}{lccccr}
