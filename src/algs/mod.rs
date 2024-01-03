@@ -1,6 +1,5 @@
-use crate::sat::KnfSat;
-mod bf0;
-mod knf3bf0;
+pub mod bf0;
+pub mod knf3;
 
 // pub fn get_algorithm<T: SatSolver>(sat: KnfSat, alg: u8) -> T {
 //     match alg {

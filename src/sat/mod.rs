@@ -1,4 +1,4 @@
-pub mod solver;
+pub mod knf_sat;
 
 /**
  * A Variable is denoted as a non-zero number with negatives implying negations of the variable.
@@ -14,59 +14,21 @@ pub struct KnfSat {
 }
 
 /**
- * Implementations
+ * Transformation
  */
-impl KnfSat {
-    pub fn new() -> Self {
-        Self {
-            eq: vec![vec![]]
-        }
-    }
+pub type TransformSat = dyn Fn(KnfSat) -> KnfSat;
 
-    /**
-     * Rename variables to tightly cover [1 .. output]
-     */
-    pub fn flatten(&mut self) -> usize {
-        let mut reference = vec![];
+/**
+ * SatSolver satisfyability
+ */
+pub type CanSolveSat = dyn Fn(KnfSat) -> bool;
 
-        for clausel in &mut self.eq {
-            for literal in clausel {
-                let pos = reference.iter().position(|&r| r == literal.abs());
+/**
+ * SatSolver
+ */
+pub type SolveSat = dyn Fn(KnfSat) -> Vec<Variable>;
 
-                let new_val: Variable = if let Some(p) = pos {
-                    p as Variable + 1
-                } else {
-                    reference.push((literal).abs());
-                    reference.len() as Variable
-                };
-
-                if literal > &mut 0 {
-                    *literal = new_val;
-                } else {
-                    *literal = -new_val;
-                }
-            }
-        }
-
-        reference.len()
-    }
-
-    /**
-     * Counter of Variables in the equation
-     */
-    pub fn varsize(&self) -> usize {
-        let mut reference = vec![];
-
-        for clausel in &self.eq {
-            for literal in clausel {
-                let pos = reference.iter().position(|&r| r == literal.abs());
-
-                if let None = pos {
-                    reference.push((literal).abs());
-                };
-            }
-        }
-
-        reference.len()
-    }
-}
+/**
+ * SatSolver
+ */
+pub type SolveAllSat = dyn Fn(KnfSat) -> Vec<Vec<Variable>>;

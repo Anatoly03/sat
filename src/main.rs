@@ -5,7 +5,6 @@ mod sat;
 mod test;
 
 use sat::KnfSat;
-use sat::solver::SatSolver;
 use std::{env, str::FromStr};
 
 fn main() {
