@@ -2,7 +2,21 @@ import math
 import sys
 import api
 
-args = api.read_args()
+args = api.read_args("""============================
+---- Sat2File Converter ----
+
+Converts a CNF SAT equation to a compressed file.
+    Usage: %c -- 'Equation' [OPTIONS]
+
+Equation Grammar:
+    * Disjunctions are separated by `|`
+    * Literals are numbers, negative numbers represent negated variables.
+    → Example: `1 2 -3 | -2 3 4 | -1 2 -4`
+
+Options:
+    -o Output File
+============================""")
+
 EQUATION = args['eq']
 
 if EQUATION is None:

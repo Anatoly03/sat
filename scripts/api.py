@@ -29,12 +29,11 @@ def eq_to_list(eq):
 def varcount(eq_list):
     return max([abs(v) for clauses in eq_list for v in clauses])
 
-def read_args():
+def read_args(help):
     output = {
         'algorithm' : None,
         'benchmark' : False,
         'eq' : None,
-        'help' : False,
         'input' : None,
         'output' : 'output',
         'test' : False,
@@ -51,8 +50,8 @@ def read_args():
             case '--alg':
                 output['algorithm'] = sys.argv[idx + 1]
             case '-h' | '--help':
-                output['help'] = True
-                return output
+                print(help.replace("%c", sys.argv[0]))
+                sys.exit(0)
             case '-B':
                 output['benchmark'] = True
             case '-i' | '--input':
