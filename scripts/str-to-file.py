@@ -46,6 +46,7 @@ if 'c' in args['flags']:
 file.write(VAR_DISJUNCT.to_bytes() + b' ' + VAR_BYTES.to_bytes() + b'\n')
 
 for disjunction in EQUATION:
+    # TODO use VAR_DISJUNCT
     file.write(len(disjunction).to_bytes())
     for variable in disjunction:
         vbytes = abs(variable).to_bytes().zfill(VAR_BYTES)
