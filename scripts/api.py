@@ -39,9 +39,12 @@ def read_args(help):
         'algorithm' : None,
         'benchmark' : False,
         'eq' : None,
-        'eq-disjuncts' : 0,
-        'eq-variables' : 0,
+        'eq-disjuncts' : None,
+        'eq-variables' : None,
         'input' : None,
+        'number' : 8,
+        'minimum' : 4,
+        'maximum' : 64,
         'output' : 'output',
         'test' : False,
         'flags': []
@@ -77,6 +80,12 @@ def read_args(help):
                 output['output'] = sys.argv[idx + 1]
             case '-t' | '--test':
                 output['test'] = sys.argv[idx + 1]
+            case '-n':
+                output['number'] = int(sys.argv[idx + 1], 10)
+            case '--min':
+                output['minimum'] = int(sys.argv[idx + 1], 10)
+            case '--max':
+                output['maximum'] = int(sys.argv[idx + 1], 10)
             case _:
                 if arg.startswith('-'):
                     output['flags'].append(arg[1:])

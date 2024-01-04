@@ -14,8 +14,8 @@ Equation Grammar:
     → Example: `1 2 -3 | -2 3 4 | -1 2 -4`
 
 Options:
-    -o Output File
-    -c Add Equation Comment
+    -o   | Output File
+    -c   | Add Equation Comment
 ============================""")
 
 EQUATION = args['eq']
@@ -38,6 +38,7 @@ if VAR_BYTES > 8:
     print('Too many variables.')
     sys.exit(1)
 
+# TODO move to API
 file = open(args['output'], "wb")
 
 file.write(b'CNF\n')
