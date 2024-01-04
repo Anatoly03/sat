@@ -3,6 +3,11 @@ import json
 import sys
 import math
 
+EQUATION_GRAMMAR = """Equation Grammar:
+    * Disjunctions are separated by `|`
+    * Literals are numbers, negative numbers represent negated variables.
+    → Example: `1 2 -3 | -2 3 4 | -1 2 -4`"""
+
 def eq_to_list(eq):
     variables = []
     out = [[]]
@@ -34,6 +39,8 @@ def read_args(help):
         'algorithm' : None,
         'benchmark' : False,
         'eq' : None,
+        'eq-disjuncts' : 0,
+        'eq-variables' : 0,
         'input' : None,
         'output' : 'output',
         'test' : False,
@@ -48,10 +55,19 @@ def read_args(help):
                 #     output['eq'] = random_equation(int(sys.argv[idx + 2], 10), int(sys.argv[idx + 3], 10), int(sys.argv[idx + 4], 10))
                 # else:
                 output['eq'] = eq_to_list(sys.argv[idx + 1])
+                output['eq-disjuncts'] = max([len(x) for x in output['eq']])
+                output['eq-variables'] = varcount(output['eq'])
+            case '-f':
+                file = open(sys.argv[idx + 1], 'rb')
+                # TODO
+                file.close()
             case '--alg':
                 output['algorithm'] = sys.argv[idx + 1]
             case '-h' | '--help':
-                print(help.replace("%c", sys.argv[0]))
+                print(help
+                      .replace("%c", sys.argv[0])
+                      .replace("%{grammar}", EQUATION_GRAMMAR)
+                      )
                 sys.exit(0)
             case '-B':
                 output['benchmark'] = True

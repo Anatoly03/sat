@@ -1,6 +1,6 @@
+import api
 import math
 import sys
-import api
 
 args = api.read_args("""============================
 ---- Sat2File Converter ----
@@ -24,16 +24,17 @@ if EQUATION is None:
     print('no equation')
     sys.exit(1)
 
-print(EQUATION)
+# print(EQUATION)
 
-VAR_DISJUNCT = max(math.ceil(math.log(max([len(x) for x in EQUATION]), 256)), 1)
-VAR_BYTES = math.ceil(math.log(2 * api.varcount(EQUATION), 256))
+# TODO use these
+VAR_DISJUNCT = max(math.ceil(math.log(args['eq-disjuncts'], 256)), 1)
+VAR_BYTES = math.ceil(math.log(2 * args['eq-variables'], 256))
 
-if VAR_DISJUNCT > 255:
+if VAR_DISJUNCT > 4:
     print('There is a disjunction in the equation that\s too long.')
     sys.exit(1)
 
-if VAR_BYTES > 255:
+if VAR_BYTES > 8:
     print('Too many variables.')
     sys.exit(1)
 
