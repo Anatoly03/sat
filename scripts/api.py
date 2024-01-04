@@ -37,6 +37,7 @@ def read_args(help):
         'input' : None,
         'output' : 'output',
         'test' : False,
+        'flags': []
     }
 
     for idx in range(1, len(sys.argv)):
@@ -60,7 +61,12 @@ def read_args(help):
                 output['output'] = sys.argv[idx + 1]
             case '-t' | '--test':
                 output['test'] = sys.argv[idx + 1]
-            
+            case _:
+                if arg.startswith('-'):
+                    output['flags'].append(arg[1:])
+                elif arg.startswith('--'):
+                    output['flags'].append(arg[2:])
+
     return output
 
 # def random_equation(solutions, variables, disjunctions):

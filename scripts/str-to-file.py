@@ -63,9 +63,4 @@ for disjunction in EQUATION:
 
 file.close()
 
-file = open(args['output'], "rb")
-
-print(f'Written to `{args["output"]}`:')
-print(file.read())
-
-file.close()
+print(f'Success Write to `{args["output"]}`')
