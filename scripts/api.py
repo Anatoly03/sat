@@ -1,5 +1,3 @@
-
-import json
 import sys
 import math
 
@@ -31,16 +29,58 @@ def eq_to_list(eq):
     
     return out
 
-def varcount(eq_list):
-    return max([abs(v) for clauses in eq_list for v in clauses])
+def varcount(eq):
+    return max([abs(v) for clauses in eq for v in clauses])
+
+def disjunctions(eq):
+    return max([len(x) for x in eq])
+
+def write_equation(path, equation, comment):
+    # TODO use these
+    VAR_DISJUNCT = max(math.ceil(math.log(disjunctions(equation), 256)), 1)
+    VAR_BYTES = math.ceil(math.log(2 * varcount(equation), 256))
+
+    if VAR_DISJUNCT > 4:
+        print('There is a disjunction in the equation that\s too long.')
+        sys.exit(1)
+
+    if VAR_BYTES > 8:
+        print('Too many variables.')
+        sys.exit(1)
+
+    file = open(path, "wb")
+    file.write(b'CNF\n')
+    
+    for i in comment.splitlines():
+        file.write(b"# " + i.encode() + b"\n")
+    # file.write()
+    file.write(VAR_DISJUNCT.to_bytes() + b' ' + VAR_BYTES.to_bytes() + b'\n')
+
+    for disjunction in equation:
+        # TODO use VAR_DISJUNCT
+        file.write(len(disjunction).to_bytes())
+        for variable in disjunction:
+            vbytes = abs(variable).to_bytes().zfill(VAR_BYTES)
+
+            # print(vbytes[0], vbytes[0] | int('10000000', 2), bin(vbytes[0] | int('10000000', 2)), (vbytes[0] | int('10000000', 2)).to_bytes())
+
+            if variable > 0:
+                file.write(vbytes[0].to_bytes())
+            elif variable < 0:
+                file.write((vbytes[0] | int('10000000', 2)).to_bytes())
+
+            if len(vbytes) > 1:
+                file.write(vbytes[1:])
+
+        # print()
+
+    file.close()
 
 def read_args(help):
     output = {
         'algorithm' : None,
         'benchmark' : False,
         'eq' : None,
-        'eq-disjuncts' : None,
-        'eq-variables' : None,
         'input' : None,
         'number' : 8,
         'minimum' : 4,
@@ -58,8 +98,6 @@ def read_args(help):
                 #     output['eq'] = random_equation(int(sys.argv[idx + 2], 10), int(sys.argv[idx + 3], 10), int(sys.argv[idx + 4], 10))
                 # else:
                 output['eq'] = eq_to_list(sys.argv[idx + 1])
-                output['eq-disjuncts'] = max([len(x) for x in output['eq']])
-                output['eq-variables'] = varcount(output['eq'])
             case '-f':
                 file = open(sys.argv[idx + 1], 'rb')
                 # TODO
