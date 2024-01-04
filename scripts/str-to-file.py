@@ -15,6 +15,7 @@ Equation Grammar:
 
 Options:
     -o Output File
+    -c Add Equation Comment
 ============================""")
 
 EQUATION = args['eq']
@@ -39,6 +40,8 @@ if VAR_BYTES > 255:
 file = open(args['output'], "wb")
 
 file.write(b'CNF\n')
+if 'c' in args['flags']:
+    file.write(b'# ' + (' | '.join([' '.join(map(str, disjunct)) for disjunct in EQUATION])).encode() + b'\n')
 file.write(VAR_DISJUNCT.to_bytes() + b' ' + VAR_BYTES.to_bytes() + b'\n')
 
 for disjunction in EQUATION:
