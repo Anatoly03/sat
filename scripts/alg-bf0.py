@@ -27,4 +27,5 @@ for verify in itertools.product((-1, +1), repeat=args['eq-variables']):
         SOLUTIONS.append(' '.join([str((idx + 1) * x) for idx, x in enumerate(verify)]))
 
 print(f'The equation has {len(SOLUTIONS)} solutions.')
-print('\n'.join(map(lambda x: str(x) ,SOLUTIONS)))
+if 'c' in args['flags']:
+    print('\n'.join(map(lambda x: str(x) ,SOLUTIONS)))
