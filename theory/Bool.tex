@@ -1,0 +1,191 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage[english]{babel}
+\usepackage{MnSymbol}
+\usepackage{amsfonts}
+\usepackage[table]{xcolor} % http://ctan.org/pkg/xcolor
+\usepackage{hhline}
+\usepackage{multirow}
+\usepackage{multicol}% http://ctan.org/pkg/multicol
+\usepackage{calc}% http://ctan.org/pkg/calc
+\usepackage{lipsum}% http://ctan.org/pkg/lipsum
+
+\title{Introduction to Boolean Arithmetics}
+\author{Anatoly Weinstein}
+
+\begin{document}
+
+    \maketitle
+
+    In this document we will contain dry theory of boolean equations
+    and arithmetics.
+
+    For the rest of the paper: $0 \in \mathbb{N}$ be truthy.
+
+    {\ }
+
+    \textbf{Axiom of Two Values.} All unknowns $x$ in a \emph{boolean
+    system} can take at least one of two values. $\forall x: x \in\
+    \mathbb{B} =\{\top,\bot\}$.
+
+    \textbf{Axiom of Falsy Contradictions.} If a variable in a boolean
+    system is known to contradict the first axiom, then the system is a
+    paradox ($\bot$).
+
+    {\ }
+
+    We will call $\Sigma$ the \emph{environment}. Abstractly speaking, the 
+    environment of any \emph{boolean system} is the set of all inputs.
+    An element $x\in\Sigma$ is an \emph{interpretation}. A
+    \emph{finite boolean function} $f:\Sigma\to\mathbb{B}$ with $\Sigma =
+    \mathbb{B}^n$, a degree $n\in \mathbb{N}$ and the set of truthy
+    interpretations $I \subseteq \Sigma$ is defined as following:
+
+    \begin{equation}
+        \nonumber
+        x \in \Sigma: f(x) =
+        \begin{cases}
+            \top, & x \in I \\
+            \bot, & x \not\in I
+        \end{cases}
+        %\Leftrightarrow f(x)=(x\in I)
+    \end{equation}
+
+    We say the function is \emph{satisfiable} if $|I| > 0$, 
+    \emph{unsatisfiable} or a \emph{contradiction} if $|I| = 0$
+    and a \emph{tautology} if $I=\mathcal{P}(X) = \{Y:Y\subseteq X\}$.
+    An interpretation $x$ is \emph{truthy} if $f(x) = \top$, and
+    \emph{falsy} otherwise. Two boolean functions $f_1, f_2$ are equal
+    if and only if their truthy interpretations sets $I_1, I_2$ are equal.
+
+    An \emph{infinite boolean function} $f:{[0,1]}_2\rightarrow\mathbb{B}$
+    is a \emph{boolean function} of infinite degree. ${[0,1]}_2$ is the 
+    set of all irrational numbers between 0 and 1 in base 2. 
+
+    {\ } % free line
+
+    \textbf{Proof of Truthy.} $\top$ (tautalogy) is \emph{truthy}.
+    
+    \[f:\emptyset\rightarrow\mathbb{B}\mapsto\top \Rightarrow
+    I_f = \{\emptyset\} \Rightarrow |I_f| = 1 \Rightarrow \top\text{ is truthy.}\]
+
+    \textbf{Proof of Falsy.} $\bot$ (contradiction) is \emph{falsy}.
+
+    \[f:\emptyset\rightarrow\mathbb{B}\mapsto\bot \Rightarrow
+    I_f = \emptyset \Rightarrow |I_f| = 0 \Rightarrow \bot\text{ is falsy.}\]
+
+    In this document we will mainly work with the 1st-degree function
+    \emph{not} (noted as $\lnot$ or overline), and the 2nd-degree functions
+    \emph{and} (noted as $\cdot$) and \emph{or} (noted as $+$) defined as:
+
+    \begin{multicols}{3}
+        \setlength{\parindent}{0pt}
+        \begin{minipage}[t]{\linewidth}%
+            \begin{center}
+                \begin{tabular}{cp{7pt}p{7pt}}
+                    % & \multicolumn{2}{c}{$I=\{\bot\}$} \\
+                    $\lnot$ & $x_0$ & {} \\ \cline{2-2} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{2}{-}}
+                     & \multicolumn{1}{|c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {} \\ \hhline{~|*{2}{-}}
+                \end{tabular}
+            \end{center}
+            \[\lnot(x)\in\mathbb{B}\backslash\{x\}\]
+        \end{minipage}
+        \begin{minipage}[t]{\linewidth}%
+            \begin{center}
+                \begin{tabular}{cp{7pt}p{7pt}}
+                    $+$ & $x_0$ & {} \\ \cline{2-2} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{2}{-}}
+                    \multicolumn{1}{c||}{$x_1$} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {\cellcolor{blue!15}} \\ \hhline{~|*{2}{-}}
+                    \multicolumn{1}{c|} {} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {} \\ \cline{2-3}
+                \end{tabular}
+            \end{center}
+            \begin{equation}
+                \nonumber
+                \begin{split}
+                    +(x_0x_1)=\top\Leftrightarrow\\ x_0 = \top\lor x_1 = \top
+                \end{split}
+            \end{equation}
+        \end{minipage}
+        \begin{minipage}[t]{\linewidth}%
+            \begin{center}
+                \begin{tabular}{cp{7pt}p{7pt}}
+                    $\boldsymbol{\cdot}$ & $x_0$ & {} \\ \cline{2-2} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{2}{-}}
+                    \multicolumn{1}{c||} {$x_1$} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {} \\ \hhline{~|*{2}{-}}
+                    \multicolumn{1}{c|} {} & \multicolumn{1}{c|} {} & \multicolumn{1}{c|} {} \\ \cline{2-3}
+                \end{tabular}
+            \end{center}
+            \begin{equation}
+                \nonumber
+                \begin{split}
+                    \cdot(x_0x_1)=\top\Leftrightarrow\\ x_0 = x_1 = \top
+                \end{split}
+            \end{equation}
+        \end{minipage}
+    \end{multicols}
+
+    \section{Boolean Equations}
+
+    A \emph{boolean equation} is a \emph{boolean system} with
+    \emph{tuple} of variables $X$, the degree $n = |X|$ and the set of
+    truthy interpretations $I \subseteq \Sigma = \mathbb{B}^n$. 
+
+    \begin{description}
+        
+        \item[Boolean Equation.] {
+            A \emph{boolean equation} with environment $\Sigma$ and
+            binary functions $\mathcal{F}\subseteq\{f:\mathbb{B}^2\rightarrow
+            \mathbb{B}\}$ is a string defined by the following context-
+            free grammar with macro $\mathcal{M}_X$ creating productions
+            for every element of $X$.
+
+            % An example of $\mathcal{F}$ is the set $\{\land, \overline\land, \lor,
+            % \rightarrow, \oplus, \text{Id}_\text{Left}\}$
+
+            \begin{center}
+                \begin{tabular}{ccc}
+                    $S$ & $\rightarrow$& $(S)$ \vline\ $S\ \mathcal{M}_\mathcal{F}\ S$ \vline\ $\lnot (S)$ \vline\ $\mathcal{M}_\mathbb{B}$ \vline\ $\mathcal{M}_\Sigma$\\ 
+                \end{tabular}
+            \end{center}
+
+            The boolean function for this equation is defined by propagating
+            the syntax tree, calling the binary functions while iterating
+            over the branches. For every boolean equation $S$ we assign
+            $\chi_S(X)$ 
+
+            For the rest of the document we say that $\mathcal{F} = \{+,
+            \cdot\}$.
+        }
+        \item[Conjunctive normal form.] {
+            A boolean equation is in conjunctive normal form, when the
+            following grammar, too, applies.
+
+            \begin{center}
+                \begin{tabular}{ccc}
+                    $S$ & $\rightarrow$& $(D)$ \vline\ $S \cdot (D)$ \\ 
+                    $D$ & $\rightarrow$& $L$ \vline\ $D + L$ \\ 
+                    $L$ & $\rightarrow$& $\mathcal{M}_\Sigma$ \vline\ $\lnot\mathcal{M}_\Sigma$
+                \end{tabular}
+            \end{center}
+
+            A boolean equation in CNF consists of disjunctions $D$, a
+            disjunction consists of literals $L$. The notation $(a+\overline
+            b) \cdot (b +\overline c + \overline d) \cdot (\overline a +
+            \overline c)$ will be used as type ``set of literal sets'' $\{\{a,
+            \lnot b\}, \{b, \lnot c, \lnot d\}, \{\lnot a, \lnot b\}\}$ in
+            this paper.
+        }
+        \item[Notation of CNF.] {
+            We will now define some macros for working with CNF-SAT
+            equations. Be $S$ a boolean equation in CNF-SAT, consisting
+            of disjunctions $D$, $d_i \in D, D_i \subseteq D$, over the
+            environment $\Sigma$.
+
+            \[D_i =_S D_j \Leftrightarrow f_{D_i \cdot D} = f_{D_j \cdot D} \]
+
+            Two disjunctions are equivalent over the equation $S$ if 
+            under union with every disjunction from $S$, the equations
+            are equivalent.
+        }
+    \end{description}
+
+
+
+\end{document}

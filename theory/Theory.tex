@@ -5,6 +5,9 @@
 \usepackage[table]{xcolor} % http://ctan.org/pkg/xcolor
 \usepackage{hhline}
 \usepackage{multirow}
+\usepackage{multicol}% http://ctan.org/pkg/multicol
+\usepackage{calc}% http://ctan.org/pkg/calc
+\usepackage{lipsum}% http://ctan.org/pkg/lipsum
 
 \title{Sat Solver Optimisations}
 \author{Anatoly Weinstein}
@@ -195,4 +198,66 @@
               \end{equation}
         }
     \end{description}
+
+    \section{CNF-SAT Optimisation}
+
+    TODO 3-CNF-SAT equations
+
+    % https://tex.stackexchange.com/questions/25886/how-to-fix-the-width-of-a-minipage
+    \begin{multicols}{2}% Two-column layout
+    \setlength{\parindent}{0pt}% No paragraph indent
+    \begin{minipage}[t]{\linewidth}%
+        \begin{minipage}[t]{\linewidth-2\fboxsep-2\fboxrule}
+            \begin{description}
+                \item[All equal.] {
+                    $D\cdot D = D$
+                
+                    If two disjunctions are equal, remove
+                    the second one.
+                }
+                \item[One off.] {
+                    $(a+b+c)\cdot(a+b+d)$
+                
+                    If two disjunctions differ in only one
+                    letter, the following can be said:
+                    \begin{equation}
+                        \nonumber
+                        \begin{aligned}
+                            (a+b+c)\cdot(a+b+d)\\
+                            = a+b+c\cdot d
+                        \end{aligned}
+                    \end{equation}
+                }
+            \end{description}
+        \end{minipage}
+        
+    \end{minipage}
+    
+    \begin{minipage}[t]{\linewidth}%
+        \begin{minipage}[t]{\linewidth-2\fboxsep-2\fboxrule}% Remove fbox rule/sep width
+            \begin{description}
+                % \item[All different.] {
+                %     $(a+b+c)\cdot(d+e+f)$
+                %
+                %     Do nothing.
+                % }
+                \item[Opposing Literal.] {
+                    $(a+D_1)\cdot(\overline a+D_2)$
+
+                    \begin{center}
+                        \begin{tabular}{lcccc}
+                            & \multicolumn{2}{c} a \\ \cline{2-3} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{4}{-}}
+                            \multicolumn{1}{c||}{$D_1$} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|}{\cellcolor{blue!15}} \\ \hhline{~|*{4}{-}}
+                            \multicolumn{1}{c|} {} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|} {\cellcolor{blue!15}} & \multicolumn{1}{c|} {} & \multicolumn{1}{c|} {} \\ \cline{2-5} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \cline{3-4}
+                            && \multicolumn{2}{c}{$D_2$} \\
+                        \end{tabular}
+                    \end{center}
+                    
+                    Add the following 
+                }
+            \end{description}
+        \end{minipage}
+    \end{minipage}
+    \end{multicols}
+
 \end{document}
