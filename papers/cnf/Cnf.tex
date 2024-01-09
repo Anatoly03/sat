@@ -6,6 +6,9 @@
 \usepackage{multirow}
 \usepackage[table]{xcolor} % http://ctan.org/pkg/xcolor
 
+% fill cell
+\newcommand{\fc}{\cellcolor{blue!15}} % \cellcolor{black}
+
 \title{CNF $\cdot$ SAT}
 \author{Anatoly Weinstein}
 
@@ -62,8 +65,8 @@
         \begin{center}
             \begin{tabular}{l|c|p{7pt}|}
                 \multicolumn{1}{c}{} & \multicolumn{1}{c} X \\ \cline{2-2} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{2}{-}}
-                \multicolumn{1}{c||} Y & \cellcolor{black} & \\ \hhline{~|*{2}{-}}
-                & \cellcolor{black} & \cellcolor{black} \\ \hhline{~|*{2}{-}}
+                \multicolumn{1}{c||} Y & \fc & \\ \hhline{~|*{2}{-}}
+                & \fc & \fc \\ \hhline{~|*{2}{-}}
             \end{tabular}
         \end{center}
 
@@ -77,8 +80,8 @@
         \begin{center}
             \begin{tabular}{l|c|c|c|c|}
                 \multicolumn{1}{c}{} & \multicolumn{2}{c} X \\ \cline{2-3} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{4}{-}}
-                \multicolumn{1}{c||} A && \cellcolor{black} & \cellcolor{black} & \multicolumn{1}{c|}{\cellcolor{black}} \\ \hhline{~|*{4}{-}}
-                && \cellcolor{black} && \\ \cline{2-5} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \cline{3-4}
+                \multicolumn{1}{c||} A && \fc & \fc & \multicolumn{1}{c|}{\fc} \\ \hhline{~|*{4}{-}}
+                && \fc && \\ \cline{2-5} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \cline{3-4}
                 \multicolumn{2}{c}{} & \multicolumn{2}{c} B \\
             \end{tabular}
         \end{center}
@@ -90,8 +93,8 @@
         \begin{center}
             \begin{tabular}{l|c|c|c|c|}
                 \multicolumn{1}{c}{} & \multicolumn{2}{c} X \\ \cline{2-3} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{4}{-}}
-                \multicolumn{1}{c||} A &\cellcolor{black} & \cellcolor{black} & \cellcolor{black} & \\ \hhline{~|*{4}{-}}
-                & \cellcolor{black} & \cellcolor{black} && \\ \cline{2-5} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \cline{3-4}
+                \multicolumn{1}{c||} A &\fc & \fc & \fc & \\ \hhline{~|*{4}{-}}
+                & \fc & \fc && \\ \cline{2-5} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \cline{3-4}
                 \multicolumn{2}{c}{} & \multicolumn{2}{c} B \\
             \end{tabular}
         \end{center}
@@ -103,10 +106,10 @@
         \begin{center}
             \begin{tabular}{l|p{3px}|p{3px}|p{3px}|p{3px}|r}
                 \multicolumn{1}{c}{} & \multicolumn{2}{c} A \\ \cline{2-3} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{4}{-}}
-                \multicolumn{1}{l||}{\multirow{2}{*}{C}} &\cellcolor{black} & \cellcolor{black} && \cellcolor{black} \\ \hhline{~|*{4}{-}}
-                \multicolumn{1}{c||}{} &\cellcolor{black} & \cellcolor{black} & \cellcolor{black} & \cellcolor{black} & \multicolumn{1}{||r}{\multirow{2}{*}{D}} \\ \hhline{~|*{4}{-}}
-                &\cellcolor{black} & \cellcolor{black} & \cellcolor{black} && \multicolumn{1}{||r}{} \\ \hhline{~|*{4}{-}}
-                & \cellcolor{black} & \cellcolor{black} && \\ \cline{2-5} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \cline{3-4}
+                \multicolumn{1}{l||}{\multirow{2}{*}{C}} &\fc & \fc && \fc \\ \hhline{~|*{4}{-}}
+                \multicolumn{1}{c||}{} &\fc & \fc & \fc & \fc & \multicolumn{1}{||r}{\multirow{2}{*}{D}} \\ \hhline{~|*{4}{-}}
+                &\fc & \fc & \fc && \multicolumn{1}{||r}{} \\ \hhline{~|*{4}{-}}
+                & \fc & \fc && \\ \cline{2-5} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \cline{3-4}
                 \multicolumn{2}{c}{} & \multicolumn{2}{c} B \\
             \end{tabular}
         \end{center}
