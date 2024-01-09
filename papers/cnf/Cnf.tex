@@ -66,17 +66,22 @@
             \end{tabular}
         \end{center}
 
-    \end{description}
-	
-    % 3 variables logic table
+        The Absorption Rule allows to freely create new disjunctions,
+        as long it's consisting of an already existing disjunction.
 
-    % \begin{center}
-    %     \begin{tabular}{l|c|c|c|c|}
-    %         \multicolumn{1}{c}{} & \multicolumn{2}{c} X \\ \cline{2-3} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{4}{-}}
-    %         \multicolumn{1}{c||} C & \cellcolor{black} & \cellcolor{black} & \cellcolor{black} & \multicolumn{1}{c|} {} \\ \hhline{~|*{4}{-}}
-    %         &&& \cellcolor{black} & \\ \cline{2-5} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \cline{3-4}
-    %         \multicolumn{2}{c}{} & \multicolumn{2}{c} Y \\
-    %     \end{tabular}
-    % \end{center}
+        \item[Common Contradiction]
+        
+        \[(A + X)\cdot(B + \overline X)\equiv_\text{CNF}(BX+A\overline X)\]
+
+        \begin{center}
+            \begin{tabular}{l|c|c|c|c|}
+                \multicolumn{1}{c}{} & \multicolumn{2}{c} X \\ \cline{2-3} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{4}{-}}
+                \multicolumn{1}{c||} A && \cellcolor{black} & \cellcolor{black} & \multicolumn{1}{c|}{\cellcolor{black}} \\ \hhline{~|*{4}{-}}
+                && \cellcolor{black} && \\ \cline{2-5} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \cline{3-4}
+                \multicolumn{2}{c}{} & \multicolumn{2}{c} B \\
+            \end{tabular}
+        \end{center}
+
+    \end{description}
 
 \end{document}
