@@ -1,8 +1,9 @@
 \documentclass[12pt, letterpaper]{article}
 \usepackage[english]{babel}
-\usepackage{xcolor}
 \usepackage{amsmath}
+\usepackage{hhline}
 \usepackage{listings}
+\usepackage[table]{xcolor} % http://ctan.org/pkg/xcolor
 
 \title{CNF $\cdot$ SAT}
 \author{Anatoly Weinstein}
@@ -13,32 +14,32 @@
 
     TODO A CNF-SAT is an equation \ldots
 
-    \subsection*{Definitions}
+    % \subsection*{Definitions}
 
-    We will call \emph{CNF} as a structure consisting of sets of
-    literal sets. Defining recursively:
+    % We will call \emph{CNF} as a structure consisting of sets of
+    % literal sets. Defining recursively:
 
-    \begin{center}
-        \begin{tabular}{c|cl}
-            Symbol & Type \\ \hline
-            \textbf{S} & $\{D\}$ & A set of disjunctions \\
-            \textbf{D} & $\{L\}$ & A set of literals \\
-            \textbf{L} & $x, \lnot x$ & A positive or negated variable \\
-            \textbf{x} & $\top, \bot$ & A variable \\
-        \end{tabular}
-    \end{center}
+    % \begin{center}
+    %     \begin{tabular}{c|cc}
+    %         Symbol & Type \\ \hline
+    %         \textbf{S} & $\{D\}$ & Set of disjunctions \\
+    %         \textbf{D} & $\{L\}$ & Set of literals \\
+    %         \textbf{L} & $x, \lnot x$ & Positive or negated variable \\
+    %         \textbf{x} & $\top, \bot$ & Variable \\
+    %     \end{tabular}
+    % \end{center}
 
     \section{Equations}
 
     \begin{center}
         \begin{tabular}{cc}
-            Set Notation $\cdot$ CNF & $\{\{a, \overline b\}, \{b, \overline c, \overline d\}, \{\overline a, \overline c\}\}$ \\[10px]
-            Arithmetic $\cdot$ CNF & $(a+\overline b) \cdot (b +\overline c +\overline d) \cdot (\overline a +\overline c)$ \\[10px]
+            Set Notation $\cdot$ CNF & $\{\{a, \overline b\}, \{b, \overline c, \overline d\}, \{\overline a, \overline c\}\}$ \\[5px]
+            Arithmetic $\cdot$ CNF & $(a+\overline b) \cdot (b +\overline c +\overline d) \cdot (\overline a +\overline c)$ \\[5px]
             Negated $\cdot$ DNF & $\lnot(ab + \overline bcd + ac)$ \\
         \end{tabular}
     \end{center}
 
-    \subsection*{CNF Environment Formulas}
+    \subsection*{Formulas}
 
     \begin{description}
         \item[Zugzwang.]
@@ -47,10 +48,35 @@
         this literal is fixed.
         
         \[\{X\} \in S \Rightarrow X = \top \]
-        \[\{x_i \cdot \overline x_i\} \subseteq S \Rightarrow S = \bot \]
-    \end{description}
 
-    \subsection*{DNF Environment Formulas}
-    
+        \item[Absorption.]
+        
+        If a disjunction is a superset of another disjunction, it
+        can be ignored.
+        
+        \[\forall X \subseteq Y : X \cdot Y \equiv_\text{CNF} X \]
+
+        Proof: $(X \Rightarrow Y) \lor \lnot X$ makes $Y$ irrelevant.
+
+        \begin{center}
+            \begin{tabular}{l|c|p{7pt}|}
+                \multicolumn{1}{c}{} & \multicolumn{1}{c} X \\ \cline{2-2} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{2}{-}}
+                \multicolumn{1}{c||} Y & \cellcolor{black} & \\ \hhline{~|*{2}{-}}
+                & \cellcolor{black} & \cellcolor{black} \\ \hhline{~|*{2}{-}}
+            \end{tabular}
+        \end{center}
+
+    \end{description}
 	
+    % 3 variables logic table
+
+    % \begin{center}
+    %     \begin{tabular}{l|c|c|c|c|}
+    %         \multicolumn{1}{c}{} & \multicolumn{2}{c} X \\ \cline{2-3} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{4}{-}}
+    %         \multicolumn{1}{c||} C & \cellcolor{black} & \cellcolor{black} & \cellcolor{black} & \multicolumn{1}{c|} {} \\ \hhline{~|*{4}{-}}
+    %         &&& \cellcolor{black} & \\ \cline{2-5} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \cline{3-4}
+    %         \multicolumn{2}{c}{} & \multicolumn{2}{c} Y \\
+    %     \end{tabular}
+    % \end{center}
+
 \end{document}
