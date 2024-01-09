@@ -17,21 +17,28 @@
     \maketitle
 
     In this document we will contain dry theory of boolean equations
-    and arithmetics.
+    and arithmetics. For the rest of the paper: $0 \in \mathbb{N}$
+    holds true.
 
-    For the rest of the paper: $0 \in \mathbb{N}$ be truthy.
+    \section{Axioms}
 
-    {\ }
+    \begin{description}
+        \item[Axiom of Binary Choice.] All unknowns $x$ in a
+        \emph{boolean system} can take at least one of two values.
+        
+        \[ \forall x: x \in \mathbb{B} =\{\top,\bot\} \]
 
-    \textbf{Axiom of Two Values.} All unknowns $x$ in a \emph{boolean
-    system} can take at least one of two values. $\forall x: x \in\
-    \mathbb{B} =\{\top,\bot\}$.
+        \item[Boolean Systems.] A \emph{boolean system} is a structure,
+        which can be mapped to one and only one function $f:\mathbb{N}
+        \mapsto\mathbb{B}$.
+        
+        A boolean system is a \emph{tautology} if its' mapping is
+        $f(x)=\top$, a \emph{contradiction}, if $f(x)=\bot$
+    \end{description}
 
-    \textbf{Axiom of Falsy Contradictions.} If a variable in a boolean
-    system is known to contradict the first axiom, then the system is a
-    paradox ($\bot$).
+    
 
-    {\ }
+    \section{Boolean Functions}
 
     We will call $\Sigma$ the \emph{environment}. Abstractly speaking, the 
     environment of any \emph{boolean system} is the set of all inputs.
