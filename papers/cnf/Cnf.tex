@@ -3,6 +3,7 @@
 \usepackage{amsmath}
 \usepackage{hhline}
 \usepackage{listings}
+\usepackage{multirow}
 \usepackage[table]{xcolor} % http://ctan.org/pkg/xcolor
 
 \title{CNF $\cdot$ SAT}
@@ -90,6 +91,21 @@
             \begin{tabular}{l|c|c|c|c|}
                 \multicolumn{1}{c}{} & \multicolumn{2}{c} X \\ \cline{2-3} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{4}{-}}
                 \multicolumn{1}{c||} A &\cellcolor{black} & \cellcolor{black} & \cellcolor{black} & \\ \hhline{~|*{4}{-}}
+                & \cellcolor{black} & \cellcolor{black} && \\ \cline{2-5} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \cline{3-4}
+                \multicolumn{2}{c}{} & \multicolumn{2}{c} B \\
+            \end{tabular}
+        \end{center}
+
+        \item[Common and Contradicting Part]
+        
+        \[ (A + B + C) \cdot (A + \lnot B + D) \equiv_\text{CNF} (A + (B + C)(\lnot B + D)) \equiv_\text{CNF} (A + BD + C \overline B)\]
+
+        \begin{center}
+            \begin{tabular}{l|p{3px}|p{3px}|p{3px}|p{3px}|r}
+                \multicolumn{1}{c}{} & \multicolumn{2}{c} A \\ \cline{2-3} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{4}{-}}
+                \multicolumn{1}{l||}{\multirow{2}{*}{C}} &\cellcolor{black} & \cellcolor{black} && \cellcolor{black} \\ \hhline{~|*{4}{-}}
+                \multicolumn{1}{c||}{} &\cellcolor{black} & \cellcolor{black} & \cellcolor{black} & \cellcolor{black} & \multicolumn{1}{||r}{\multirow{2}{*}{D}} \\ \hhline{~|*{4}{-}}
+                &\cellcolor{black} & \cellcolor{black} & \cellcolor{black} && \multicolumn{1}{||r}{} \\ \hhline{~|*{4}{-}}
                 & \cellcolor{black} & \cellcolor{black} && \\ \cline{2-5} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \cline{3-4}
                 \multicolumn{2}{c}{} & \multicolumn{2}{c} B \\
             \end{tabular}
