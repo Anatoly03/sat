@@ -100,8 +100,8 @@
         \end{center}
 
         \item[Common and Contradicting Part]
-        
-        \[ (A + B + C) \cdot (A + \lnot B + D) \equiv_\text{CNF} (A + (B + C)(\lnot B + D)) \equiv_\text{CNF} (A + BD + C \overline B)\]
+
+        \[ (A + B + C) \cdot (A + \lnot B + D) \equiv_\text{CNF} (A + BD + C \overline B)\]
 
         \begin{center}
             \begin{tabular}{l|p{3px}|p{3px}|p{3px}|p{3px}|r}
@@ -113,6 +113,12 @@
                 \multicolumn{2}{c}{} & \multicolumn{2}{c} B \\
             \end{tabular}
         \end{center}
+
+        Proof: \begin{equation}\nonumber\begin{split}
+            (A + B + C) \cdot (A + \lnot B + D) \\
+            \equiv_\text{CNF} (A + (B + C)(\lnot B + D)) \\
+            \equiv_\text{CNF} (A + BD + C \overline B)
+        \end{split}\end{equation}
 
     \end{description}
 
