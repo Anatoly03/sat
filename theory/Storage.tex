@@ -48,27 +48,66 @@
 
     \section{Compressed CNF-SAT \texttt{.cnf}}
 
+	A compressed CNF-SAT equation consists of three blocks,
+	the \texttt{Headers}, \texttt{Solution Strings} and the
+	\text{Equation String}.
+
     \begin{description}
 		\item[Magic Bytes] {
         	The file starts with the bytes \texttt{CNF}
+			followed by a whitespace.
+        }
+		\item[Comments] {
+        	The next block includes comments. These are
+			ignored by the parsers. Every comment fills
+			one line starting with \texttt{\#} and ending
+			with line break.
         }
 		\item[Dimension Bytes] {
 			The following two bytes specify the size of
 			disjunctions and variable storage.
 
         	The first magic byte specifies the size of
-			variables in bytes. (1 byte stores up to 127
-			different variables, 2 bytes up to 32,767 
-			different variables.)
+			variables $n$ in bytes.
 
 			The following magic byte specifies the size
-			of a disjunction magic bytes. (1 byte allows
-			up to 255 variables per disjunction. 2 bytes
-			up to 65,536 different variables per
-			disjunction)
+			of a disjunction $D_\text{max}$ magic bytes.
         }
 
-		\item[\ldots Iteration] {
+		\item[\ldots Solutions] {
+			The first block of the document provides some
+			solutions to the logic equations given in the 
+			document.
+
+			\begin{description}
+				\item[Magic Byte] {
+					Specifies the next state.
+
+					\begin{description}
+						\item[\texttt{00}] {
+							There are no more solutions
+							left.
+						} 
+						\item[\texttt{01}] {
+							Next bytes is a solution.
+						} 
+						\item[\texttt{FF}] {
+							There are further solutions
+							which are not provided in the 
+							document.
+						} 
+					\end{description}
+				} 
+				\item[\ldots Solution] {
+					$n$ bits, rounded up to bytes, of
+					positional interpretations. A bit
+					at position $n$ is $1$, if and
+					only of the variable $n$ is truthy.
+				} 
+			\end{description}
+        }
+
+		\item[\ldots Equation] {
 			The rest of the document are iterations over
 			disjunctions.
 
@@ -77,6 +116,9 @@
 					Specifies how many variables will
 					follow. Size of this magic byte is
 					specified in the header.
+
+					Zero to indicate there are no more
+					disjunctions.
 				} 
 				\item[\ldots Variables] {
 					Byte String of Variables, every

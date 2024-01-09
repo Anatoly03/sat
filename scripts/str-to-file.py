@@ -23,10 +23,10 @@ if EQUATION is None:
     print('no equation')
     sys.exit(1)
 
-EQUATION_STRING = ''
+EQUATION_STRING_COMMENT = ''
 if 'c' in args['flags']:
-    EQUATION_STRING = ' | '.join([' '.join(map(str, disjunct)) for disjunct in EQUATION])
+    EQUATION_STRING_COMMENT = ' | '.join([' '.join(map(str, disjunct)) for disjunct in EQUATION])
 
-api.write_equation(args["output"], EQUATION, EQUATION_STRING)
+api.write_equation(args["output"], EQUATION, api.solve_equation(EQUATION), EQUATION_STRING_COMMENT)
 
 print(f'Success Write to `{args["output"]}`')

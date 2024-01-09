@@ -1,3 +1,4 @@
+import itertools
 import sys
 import math
 
@@ -35,7 +36,7 @@ def varcount(eq):
 def disjunctions(eq):
     return max([len(x) for x in eq])
 
-def write_equation(path, equation, comment):
+def write_equation(path, equation, solutions=None, comment=None):
     # TODO use these
     VAR_DISJUNCT = max(math.ceil(math.log(disjunctions(equation), 256)), 1)
     VAR_BYTES = math.ceil(math.log(2 * varcount(equation), 256))
@@ -48,13 +49,49 @@ def write_equation(path, equation, comment):
         print('Too many variables.')
         sys.exit(1)
 
+    #
+    # 'CNF\n' magic header
+    #
+
     file = open(path, "wb")
     file.write(b'CNF\n')
+
+    #
+    # Comments
+    #
     
-    for i in comment.splitlines():
-        file.write(b"# " + i.encode() + b"\n")
-    # file.write()
-    file.write(VAR_DISJUNCT.to_bytes() + b' ' + VAR_BYTES.to_bytes() + b'\n')
+    if comment is not None:
+        for i in comment.splitlines():
+            file.write(b"# " + i.encode() + b"\n")
+
+    #
+    # Magic Bytes
+    #
+    
+    file.write(VAR_DISJUNCT.to_bytes() + VAR_BYTES.to_bytes())
+
+    #
+    # Solutions
+    #
+
+    for sol in solutions:
+        sb = ''
+        print(sol)
+        for bit in sol:
+            if bit > 0:
+                sb += '1'
+            else:
+                sb += '0'
+        print(sb)
+        pass
+
+    # TODO
+
+    
+
+    #
+    # Equation
+    #
 
     for disjunction in equation:
         # TODO use VAR_DISJUNCT
@@ -72,9 +109,28 @@ def write_equation(path, equation, comment):
             if len(vbytes) > 1:
                 file.write(vbytes[1:])
 
-        # print()
+    file.write(b"\0" * VAR_DISJUNCT)
+
+    #
+    # EOF
+    #
 
     file.close()
+
+def solve_equation(eq):
+    SOLUTIONS = []
+
+    def solve(EQC, verify, mode):
+        if isinstance(EQC, int):
+            return EQC * verify[abs(EQC) - 1] > 0
+        
+        return mode([solve(clause, verify, any) for clause in EQC])
+
+    for verify in itertools.product((-1, +1), repeat=varcount(eq)):
+        if solve(eq, verify, all):
+            SOLUTIONS.append([(idx + 1) * x for idx, x in enumerate(verify)])
+
+    return SOLUTIONS
 
 def read_args(help):
     output = {
