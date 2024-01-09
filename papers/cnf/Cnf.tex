@@ -51,9 +51,9 @@
         If a disjunction consists of one literal, the value of
         this literal is fixed.
         
-        \[\{X\} \in S \Rightarrow X = \top \]
+        \[\{X\} \in CNF \Rightarrow X = \top \]
 
-        \item[Absorption.]
+        \item[Absorption (CNF).]
         
         If a disjunction is a superset of another disjunction, it
         can be ignored.
@@ -62,16 +62,20 @@
 
         Proof: $(X \Rightarrow Y) \lor \lnot X$ makes $Y$ irrelevant.
 
-        \begin{center}
-            \begin{tabular}{l|c|p{7pt}|}
-                \multicolumn{1}{c}{} & \multicolumn{1}{c} X \\ \cline{2-2} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{2}{-}}
-                \multicolumn{1}{c||} Y & \fc & \\ \hhline{~|*{2}{-}}
-                & \fc & \fc \\ \hhline{~|*{2}{-}}
-            \end{tabular}
-        \end{center}
+        \begin{center}\begin{tabular}{l|c|p{7pt}|}
+            \multicolumn{1}{c}{} & \multicolumn{1}{c} X \\ \cline{2-2} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{2}{-}}
+            \multicolumn{1}{c||} Y & \fc & \\ \hhline{~|*{2}{-}}
+            & \fc & \fc \\ \hhline{~|*{2}{-}}
+        \end{tabular}\end{center}
 
         The Absorption Rule allows to freely create new disjunctions,
         as long it's consisting of an already existing disjunction.
+
+        \item[Absorption (DNF).]
+
+        \[\forall X \subseteq Y : X + Y \equiv_\text{DNF} X \]
+
+        Proof: $(X \Rightarrow \top) \land (\lnot X \Rightarrow \lnot Y)$
 
         \item[Common Contradiction.]
         
@@ -98,6 +102,16 @@
                 \multicolumn{2}{c}{} & \multicolumn{2}{c} B \\
             \end{tabular}
         \end{center}
+
+        \item[Semi-Common Part.]
+        
+        \[(AX + B)(A + C) \equiv_\text{CNF} A(X + B) + BC\]
+
+        Proof: \begin{equation}\nonumber\begin{split}
+            (AX + B)(A + C) \\
+            \equiv_\text{CNF} AX + AXC + AB + BC \\
+            \equiv_\text{CNF}^\text{Absorption} AX + AB + BC
+        \end{split}\end{equation}
 
         \item[Common and Contradicting Part]
 
