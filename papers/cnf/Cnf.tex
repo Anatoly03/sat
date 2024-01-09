@@ -136,4 +136,34 @@
 
     \end{description}
 
+    \section{Algorithms}
+
+    \subsection*{\texttt{bf0} $\cdot$ Brute Force}
+
+    \begin{enumerate}
+        \item Try out every combination of variable interpretations.
+    \end{enumerate}
+
+    \subsection*{\texttt{dbf} $\cdot$ Disjunctive Brute Force}
+
+    \begin{enumerate}
+        \item Use trivial optimisations.
+
+        \item Count the number of occurences of every literals
+        (positive and negated) and find the literal with most
+        occurences.
+
+        \item Branch: Assume the variable and accordingly clean
+        up the equation using trivial transformations.
+
+        \item Absorption: Absorb as many disjunctions to the two-
+        literals clauses.
+
+        \item If the equation is in 2-CNF-SAT, proceed with the
+        next step, otherwise jump to the first step in a recursive
+        step.
+
+        \item Solve 2-SAT the equation in polynomial time.
+    \end{enumerate}
+
 \end{document}
