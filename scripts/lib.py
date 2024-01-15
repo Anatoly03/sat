@@ -2,7 +2,6 @@ from collections.abc import Iterable
 import itertools
 import math
 
-
 class Equation:
     #
     # Static Methods
@@ -46,42 +45,61 @@ class Equation:
 
         del self.eq[-1]
 
-    # amount of disjunctions
+    #
+    # The amount of disjunctions
+    # 
     def disjunctions(self) -> Iterable[list[int]]:
         return iter(self.eq)
 
+    #
+    # Create an iterable over all solutions
+    # 
     def brute_force(self) -> Iterable[list[int]]:
         return map(
             lambda x: [(idy + 1) * y for idy, y in enumerate(x)],
             itertools.product((-1, +1), repeat=self.varcount()),
         )
 
-    # amount of variables
+    #
+    # Amount of Variables
+    # 
     def varcount(self) -> int:
         return max([abs(v) for clauses in self.eq for v in clauses])
     
+    #
+    # Iterate over Variables
+    # 
     def var_iter(self) -> Iterable[int]:
         return range(1, self.varcount() + 1)
 
+    #
     # Occurences of a variable (left neutral, right negated)
+    # 
     def occurences(self, var) -> (int, int):
         return (
             sum([1 if var in x else 0 for x in self.eq]),
             - sum([1 if -var in x else 0 for x in self.eq]),
         )
     
-    # Given an interpretation, get the grid of 
+    #
+    # Given an interpretation, get the grid of truthy disjunctions
+    #
     def truthy_disjunctions(self, sol) -> list[bool]:
         return [any([i in sol for i in d]) for d in self.eq]
     
+    # 
     # Does an interpretation satisfy the equation?
     # If yes, we also add it to the solutions.
+    # 
     def solves(self, sol) -> bool:
         s = all(self.truthy_disjunctions(sol))
         if s and sol not in self.sols:
             self.sols.append(sol)
         return s
     
+    #
+    # Create a new equation assuming a certain variable to be truthy
+    #
     def assume(self, val):
         out = Equation('')
 
@@ -96,23 +114,16 @@ class Equation:
 
         return out
 
-    # def _solve_helper(equation : int | list[int], verify, mode = all) -> bool:
-    #     if isinstance(equation, int):
-    #         return equation * verify[abs(equation) - 1] > 0
-        
-    #     return mode([solve(clause, verify, any) for clause in equation])
-    
-    # def solves(self, sol, mode = all) -> bool:
-    #     if isinstance(self.eq, int):
-    #         return EQC * verify[abs(EQC) - 1] > 0
-        
-    #     return mode([solve(clause, verify, any) for clause in EQC])
-
     # def __len__(self) -> int:
     #     """Amount of disjunctions."""
     #     return len(self.eq)
 
+    #
+    # Convert the equation and currently known solutions to a file format
+    #
     def __bytes__(self, comment: str = None) -> [bytes, str]:
+        # TODO
+
         """Convert the equation to a encoded format"""
         out = bytes()
 
@@ -192,9 +203,9 @@ class Equation:
 
         return out
 
-    def __hash__(self):
-        """The equation is the only consistent part of the equation."""
-        return hash(self.eq)
+    # def __hash__(self):
+    #     """The equation is the only consistent part of the equation."""
+    #     return hash(self.eq)
 
     # https://medium.com/@ayeshasidhikha188/a-journey-through-pythons-magic-methods-a35c79b856c7#:~:text=The%20__divmod__method,of%20their%20quotient%20and%20remainder.
 
@@ -272,3 +283,11 @@ class Equation:
 
     # TODO
     # 'append', 'clear', 'copy', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort'
+
+class Solver:
+    eq: Equation
+
+    def __init__(self, eq_string: Equation):
+        self.eq = eq_string
+
+    

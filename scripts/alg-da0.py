@@ -20,13 +20,20 @@ print()
 print(EQUATION)
 print('####')
 
-def pick_best(eq):
+def pick_best(eq: Equation) -> int:
     order = [(x,) + eq.occurences(x) for x in eq.var_iter()]
     order.sort(key = lambda x: max(abs(x[1]), abs(x[2])), reverse=True)
     
     if abs(order[0][1]) >= abs(order[0][2]):
         return order[0][0]
     return - order[0][0]
+
+def trivial_pick(eq: Equation) -> list[int] | None:
+    x = list(filter(lambda x: len(x) < 2, eq.disjunctions()))
+    if len(x) == 0: return None
+    return x
+
+
 
 k = EQUATION.assume(pick_best(EQUATION))
 print(k)
