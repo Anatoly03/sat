@@ -39,10 +39,13 @@ def read_args(help):
             case '--alg':
                 output['algorithm'] = sys.argv[idx + 1]
             case '-h' | '--help':
-                print(help
+                print(
+                    "============================" +
+                    help
                       .replace("%c", sys.argv[0])
                       .replace("%{grammar}", EQUATION_GRAMMAR)
-                      )
+                    + "============================"
+                )
                 sys.exit(0)
             case '-B':
                 output['benchmark'] = True
@@ -64,7 +67,23 @@ def read_args(help):
                 elif arg.startswith('--'):
                     output['flags'].append(arg[2:])
 
+    # idx = 1
+
+    # while idx < len(sys.argv):
+    #     arg = sys.argv[idx]
+    #     optargs = []
+
+    #     if (arg.startswith('-')):
+    #         while idx < len(sys.argv) and not sys.argv[idx + 1].startswith('-'):
+    #             optargs.append(idx + 1)
+    #             idx += 1
+
+    #     print()
+
+    #     idx += 1
+
     return output
+
 
 # def random_equation(solutions, variables, disjunctions):
 #     return "1 | -1"
