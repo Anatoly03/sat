@@ -20,11 +20,14 @@ print()
 print(EQUATION)
 print('####')
 
-order = [(x,) + EQUATION.occurences(x) for x in EQUATION.var_iter()]
-order.sort(key = lambda x: max(abs(x[1]), abs(x[2])), reverse=True)
+def pick_best(eq):
+    order = [(x,) + eq.occurences(x) for x in eq.var_iter()]
+    order.sort(key = lambda x: max(abs(x[1]), abs(x[2])), reverse=True)
+    
+    if abs(order[0][1]) >= abs(order[0][2]):
+        return order[0][0]
+    return - order[0][0]
 
-tr = 1 if abs(order[0][1]) >= abs(order[0][2]) else -1
-
-k = EQUATION.assume(order[0][0] * tr)
+k = EQUATION.assume(pick_best(EQUATION))
 print(k)
 print('####')
