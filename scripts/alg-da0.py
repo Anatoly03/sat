@@ -1,4 +1,5 @@
 import api
+from lib import Equation
 
 args = api.read_args("""
 --- Disjunctive SatSolver ---
@@ -13,12 +14,17 @@ Options:
     -c Write Output to Console
 """)
 
-EQUATION = args['eq']
-
-def trivial():
-    pass
+EQUATION = Equation(args['eq'])
 
 print()
+print(EQUATION)
+print('####')
 
-for i in range(0, api.varcount(EQUATION)):
-    print(i, api.occurences(EQUATION, i))
+order = [(x,) + EQUATION.occurences(x) for x in EQUATION.var_iter()]
+order.sort(key = lambda x: max(abs(x[1]), abs(x[2])), reverse=True)
+
+tr = 1 if abs(order[0][1]) >= abs(order[0][2]) else -1
+
+k = EQUATION.assume(order[0][0] * tr)
+print(k)
+print('####')

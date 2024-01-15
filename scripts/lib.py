@@ -24,6 +24,10 @@ class Equation:
     def __init__(self, eq_string: str):
         variables = []
         self.eq = [[]]
+        self.sols = []
+
+        if (eq_string is ''):
+            return
 
         for clause in eq_string.split("|"):
             for var in clause.split():
@@ -46,7 +50,7 @@ class Equation:
     def disjunctions(self) -> Iterable[list[int]]:
         return iter(self.eq)
 
-    def brute_force(self):
+    def brute_force(self) -> Iterable[list[int]]:
         return map(
             lambda x: [(idy + 1) * y for idy, y in enumerate(x)],
             itertools.product((-1, +1), repeat=self.varcount()),
@@ -55,12 +59,15 @@ class Equation:
     # amount of variables
     def varcount(self) -> int:
         return max([abs(v) for clauses in self.eq for v in clauses])
+    
+    def var_iter(self) -> Iterable[int]:
+        return range(1, self.varcount() + 1)
 
     # Occurences of a variable (left neutral, right negated)
-    def occurences(self, var) -> int:
+    def occurences(self, var) -> (int, int):
         return (
             sum([1 if var in x else 0 for x in self.eq]),
-            sum([1 if -var in x else 0 for x in self.eq]),
+            - sum([1 if -var in x else 0 for x in self.eq]),
         )
     
     # Given an interpretation, get the grid of 
@@ -74,6 +81,20 @@ class Equation:
         if s and sol not in self.sols:
             self.sols.append(sol)
         return s
+    
+    def assume(self, val):
+        out = Equation('')
+
+        # This filters out all val's, as they are true.
+        # out.eq = [d for d in filter(lambda d: val not in d, self.eq)]
+        
+        out.eq = [list(filter(lambda x: x != -val, d)) for d in filter(lambda d: val not in d, self.eq)]
+
+
+        # out.eq = [list(filter(lambda x: -val == x, d)) for d in filter(lambda d: val not in d, self.eq)]
+        # self.sols = [] # TODO
+
+        return out
 
     # def _solve_helper(equation : int | list[int], verify, mode = all) -> bool:
     #     if isinstance(equation, int):
@@ -184,7 +205,7 @@ class Equation:
     # __pow__
 
     def __str__(self):
-        return "TODO"
+        return ' | '.join([' '.join(map(str, d)) for d in self.eq])
 
     def __or__(self, other):
         pass  # disjunction of two equations
