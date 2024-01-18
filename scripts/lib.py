@@ -290,4 +290,11 @@ class Solver:
     def __init__(self, eq_string: Equation):
         self.eq = eq_string
 
-    
+class SewingThreadHolder:
+
+    #
+    # Inspired by Wooden Sewing Thread Holder
+    # 
+    # Layers of CNF and DNF switches
+
+    pass
