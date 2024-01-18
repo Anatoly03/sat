@@ -1,7 +1,7 @@
 import api
 from lib import Equation
 
-args = api.read_args("""
+api.help("""
 --- Disjunctive SatSolver ---
 
 Solve a CNF SAT equation with 'Disjunctive Absorption'
@@ -12,7 +12,11 @@ Solve a CNF SAT equation with 'Disjunctive Absorption'
 Options:
     -o Output File (Will Write if Specified)
     -c Write Output to Console
-""", "--:eq;-o:str;-c")
+""")
+
+args = api.read_args() # "--:eq;-o:str;-c:bool"
+
+
 
 EQUATION = Equation(args['eq'])
 

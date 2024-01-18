@@ -1,7 +1,7 @@
 import api
 from lib import Equation
 
-args = api.read_args("""
+api.help("""
 --- BruteForce SatSolver ---
 
 Solves a CNF SAT equation with 'Brute Force'
@@ -12,7 +12,9 @@ Solves a CNF SAT equation with 'Brute Force'
 Options:
     -o Output File (Will Write if Specified)
     -c Write Output to Console
-""", "--:eq;-o:str;-c")
+""")
+
+args = api.read_args() # "--:eq;-o:str;-c:bool"
 
 EQUATION = Equation(args['eq'])
 

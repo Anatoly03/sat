@@ -1,4 +1,4 @@
-import itertools
+
 import sys
 import math
 
@@ -7,10 +7,21 @@ EQUATION_GRAMMAR = """Equation Grammar:
     * Literals are numbers, negative numbers represent negated variables.
     → Example: `1 2 -3 | -2 3 4 | -1 2 -4`"""
 
+HELP_MESSAGE = """
+--- Test Help Message ---
+
+This command does nothing.
+    Usage: No Usage
+"""
+
 def write_equation(path, equation, solutions=None, comment=None):
     pass
 
-def read_args(help: str, pattern: str):
+def help(h: str):
+    global HELP_MESSAGE
+    HELP_MESSAGE = h
+
+def read_args():
     output = {
         'algorithm' : None,
         'benchmark' : False,
@@ -41,7 +52,7 @@ def read_args(help: str, pattern: str):
             case '-h' | '--help':
                 print(
                     "============================" +
-                    help
+                    HELP_MESSAGE
                       .replace("%c", sys.argv[0])
                       .replace("%{grammar}", EQUATION_GRAMMAR)
                     + "============================"
