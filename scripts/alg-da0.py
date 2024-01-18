@@ -12,7 +12,7 @@ Solve a CNF SAT equation with 'Disjunctive Absorption'
 Options:
     -o Output File (Will Write if Specified)
     -c Write Output to Console
-""")
+""", "--:eq;-o:str;-c")
 
 EQUATION = Equation(args['eq'])
 

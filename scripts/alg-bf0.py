@@ -12,7 +12,7 @@ Solves a CNF SAT equation with 'Brute Force'
 Options:
     -o Output File (Will Write if Specified)
     -c Write Output to Console
-""")
+""", "--:eq;-o:str;-c")
 
 EQUATION = Equation(args['eq'])
 

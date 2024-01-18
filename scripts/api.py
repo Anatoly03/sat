@@ -10,7 +10,7 @@ EQUATION_GRAMMAR = """Equation Grammar:
 def write_equation(path, equation, solutions=None, comment=None):
     pass
 
-def read_args(help):
+def read_args(help: str, pattern: str):
     output = {
         'algorithm' : None,
         'benchmark' : False,
