@@ -42,6 +42,16 @@ def help(h: str):
     HELP_MESSAGE = h
 
 
+def format(h):
+    return (
+        h.replace("%{program}", sys.argv[0])
+        .replace("%{name}", NAME_MESSAGE)
+        .replace("%{usage}", USAGE_MESSAGE)
+        .replace("%{grammar}", EQUATION_GRAMMAR)
+        .replace("%{options}", OPTIONS_MESSAGE)
+    )
+
+
 def read_args():
     output = {
         "algorithm": None,
@@ -71,13 +81,7 @@ def read_args():
             case "--alg":
                 output["algorithm"] = sys.argv[idx + 1]
             case "-h" | "--help":
-                print(
-                    HELP_MESSAGE.replace("%{program}", sys.argv[0])
-                    .replace("%{name}", NAME_MESSAGE)
-                    .replace("%{usage}", USAGE_MESSAGE)
-                    .replace("%{grammar}", EQUATION_GRAMMAR)
-                    .replace("%{options}", OPTIONS_MESSAGE)
-                )
+                print(format(HELP_MESSAGE))
                 sys.exit(0)
             case "-B":
                 output["benchmark"] = True
