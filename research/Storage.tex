@@ -4,7 +4,7 @@
 \usepackage{amsmath}
 \usepackage{listings}
 
-\title{Storing Knf Equations}
+\title{Storing CNF Equations}
 \author{Anatoly Weinstein}
 
 \begin{document}
@@ -18,32 +18,21 @@
     \section{Human Readable SAT \texttt{.hsat}}
 
     \begin{description}
-		\item[Magic Bytes] {
-        	The file starts with the bytes \texttt{HSAT}
-        }
-        \item[Grammar] {
-        	Contains a general unformated equation.
+		\item[Magic Bytes]
 
-			\texttt {
-				\textcolor{blue}{S} $\rightarrow$ SAT\string( \textcolor{blue}{EQ} \string) \\
-				\textcolor{blue}{EQ} $\rightarrow$ \textcolor{blue}{BINOP}\string( \textcolor{blue}{EQ}, \textcolor{blue}{EQ} \string) \textcolor{blue}{|} NOT\string( \textcolor{blue}{EQ} \string) \\
-				\textcolor{blue}{EQ} $\rightarrow$ \textcolor{blue}{NUM} \textcolor{blue}{|} T \textcolor{blue}{|} F \\
-				\textcolor{blue}{BINOP} $\rightarrow$ AND \textcolor{blue}{|} OR \textcolor{blue}{|} XOR \textcolor{blue}{|} NOR \\
-			}
-        }
-    \end{description}
+        The file starts with the bytes \texttt{SAT}
 
-    \section{Human Readable CNF-SAT \texttt{.hcnf}}
+        \item[Grammar]
 
-    \begin{description}
-		\item[Magic Bytes] {
-        	The file starts with the bytes \texttt{HCNF}
-        }
-        \item[Grammar] {
-        	Contains a general unformated equation.
+		Contains a general unformated equation.
 
-			TODO
-        }
+		\texttt {
+			\textcolor{blue}{S} $\rightarrow$ SAT\string( \textcolor{blue}{EQ} \string) \\
+			\textcolor{blue}{EQ} $\rightarrow$ \textcolor{blue}{BINOP}{\string(} \textcolor{blue}{EQ}{,} \textcolor{blue}{EQ} {\string)} \textcolor{blue}{|} {NOT\string(} \textcolor{blue}{EQ} {\string)} \\
+			\textcolor{blue}{EQ} $\rightarrow$ \textcolor{blue}{NUM} \textcolor{blue}{|} {T} \textcolor{blue}{|} {F} \\
+			\textcolor{blue}{BINOP} $\rightarrow$ {AND} \textcolor{blue}{|} {OR} \textcolor{blue}{|} {XOR} \textcolor{blue}{|} {NOR} \\
+		}
+
     \end{description}
 
     \section{Compressed CNF-SAT \texttt{.cnf}}
@@ -53,82 +42,109 @@
 	\text{Equation String}.
 
     \begin{description}
-		\item[Magic Bytes] {
-        	The file starts with the bytes \texttt{CNF}
-			followed by a whitespace.
-        }
-		\item[Comments] {
-        	The next block includes comments. These are
-			ignored by the parsers. Every comment fills
-			one line starting with \texttt{\#} and ending
-			with line break.
-        }
-		\item[Dimension Bytes] {
-			The following two bytes specify the size of
-			disjunctions and variable storage.
+		\item[Magic Bytes]
+		
+		The file starts with the bytes \texttt{CNF}
+		followed by a whitespace.
 
-        	The first magic byte specifies the size of
-			variables $n$ in bytes.
+		\item[Comments]
+		
+		The next block includes comments. These are
+		ignored by the parsers. Every comment fills
+		one line starting with \texttt{\#} and ending
+		with line break.
 
-			The following magic byte specifies the size
-			of a disjunction $D_\text{max}$ magic bytes.
-        }
+		\item[Dimension Bytes]
+		
+		The following two bytes specify the size of
+		disjunctions and variable storage.
 
-		\item[\ldots Solutions] {
-			The first block of the document provides some
-			solutions to the logic equations given in the 
-			document.
+		The first magic byte specifies the size of
+		variables $n$ in bytes. (Constraint: $n \in
+		[1,8]$. Note for parser: Reading the symbol
+		\texttt{\#} refers to \emph{comments}. See
+		above.)
+
+		The following magic byte specifies the size
+		of a disjunction $D_\text{max}$ magic bytes.
+		(Constraint: $n \in [1,8]$)
+
+		\item[\ldots Solutions]
+		
+		The first block of the document provides some
+		solutions to the logic equations given in the 
+		document.
+
+		\begin{description}
+			\item[Magic Byte]
+			
+			Specifies the next state.
 
 			\begin{description}
-				\item[Magic Byte] {
-					Specifies the next state.
+				\item[\texttt{00}]
+				
+				There are no more solutions
+				left.
 
-					\begin{description}
-						\item[\texttt{00}] {
-							There are no more solutions
-							left.
-						} 
-						\item[\texttt{01}] {
-							Next bytes is a solution.
-						} 
-						\item[\texttt{FF}] {
-							There are further solutions
-							which are not provided in the 
-							document.
-						} 
-					\end{description}
-				} 
-				\item[\ldots Solution] {
-					$n$ bits, rounded up to bytes, of
-					positional interpretations. A bit
-					at position $n$ is $1$, if and
-					only of the variable $n$ is truthy.
-				} 
+				\item[\texttt{01}]
+				
+				Next bytes is a solution.
+
+				\item[\texttt{FF}]
+				
+				There are further solutions
+				which are not provided in the 
+				document.
+
 			\end{description}
-        }
 
-		\item[\ldots Equation] {
-			The rest of the document are iterations over
+			\item[\ldots Solution]
+			
+			$n$ bits, rounded up to bytes, of
+			positional interpretations. A bit
+			at position $n$ is $1$, if and
+			only of the variable $n$ is truthy.
+
+		\end{description}
+        
+
+		\item[\ldots Equation]
+		
+		The rest of the document are iterations over
+		disjunctions.
+
+		\begin{description}
+			\item[Disjunction Size]
+			
+			Specifies how many variables will
+			follow. Size of this magic byte is
+			specified in the header.
+
+			Zero to indicate there are no more
 			disjunctions.
 
-			\begin{description}
-				\item[Disjunction Size] {
-					Specifies how many variables will
-					follow. Size of this magic byte is
-					specified in the header.
+			\item[\ldots Variables]
+			
+			Byte String of Variables, every
+			variables size is specified in the
+			headers. The first bit specifies if
+			the variable is negated.
 
-					Zero to indicate there are no more
-					disjunctions.
-				} 
-				\item[\ldots Variables] {
-					Byte String of Variables, every
-					variables size is specified in the
-					headers. The first bit specifies if
-					the variable is negated.
-				} 
-			\end{description}
-        }
+		\end{description}
+
+        \item[Grammar]
+        
+		{\ }
+
+		\texttt {
+			\textcolor{blue}{S} $\rightarrow$ \colorbox{blue!15}{CNF\ } \textcolor{blue}{COMMENTS} \textcolor{blue}{DIMENSION} \textcolor{blue}{SOLUTION} \textcolor{blue}{EQUATION} \\
+			\textcolor{blue}{COMMENTS} $\rightarrow$ \colorbox{blue!15}{\#} $\dots$ \textbackslash n \\
+			\textcolor{blue}{DIMENSION} $\rightarrow$ $n$$D_{max}$ \\
+			\textcolor{blue}{SOLUTION} $\rightarrow$ TODO \\
+			\textcolor{blue}{EQUATION} $\rightarrow$ TODO \\
+			% \textcolor{blue}{EQ} $\rightarrow$ \textcolor{blue}{BINOP}\string( \textcolor{blue}{EQ}, \textcolor{blue}{EQ} \string) \textcolor{blue}{|} NOT\string( \textcolor{blue}{EQ} \string) \\
+			% \textcolor{blue}{EQ} $\rightarrow$ \textcolor{blue}{NUM} \textcolor{blue}{|} T \textcolor{blue}{|} F \\
+			% \textcolor{blue}{BINOP} $\rightarrow$ AND \textcolor{blue}{|} OR \textcolor{blue}{|} XOR \textcolor{blue}{|} NOR \\
+		}
     \end{description}
-
-	
 \end{document}
