@@ -25,7 +25,7 @@ class Equation:
         self.eq = [[]]
         self.sols = []
 
-        if (eq_string is ''):
+        if (eq_string == ''):
             return
 
         for clause in eq_string.split("|"):

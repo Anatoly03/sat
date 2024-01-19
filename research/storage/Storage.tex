@@ -39,7 +39,7 @@
 
 	A compressed CNF-SAT equation consists of three blocks,
 	the \texttt{Headers}, \texttt{Solution Strings} and the
-	\text{Equation String}.
+	\texttt{Equation String}.
 
     \begin{description}
 		\item[Magic Bytes]
@@ -63,7 +63,8 @@
 		variables $n$ in bytes. (Constraint: $n \in
 		[1,8]$. Note for parser: Reading the symbol
 		\texttt{\#} refers to \emph{comments}. See
-		above.)
+		above. The first bit is always reserved for
+		sign.)
 
 		The following magic byte specifies the size
 		of a disjunction $D_\text{max}$ magic bytes.
@@ -81,29 +82,49 @@
 			Specifies the next state.
 
 			\begin{description}
-				\item[\texttt{00}]
+
+				\item[\texttt{00} Finished State]
 				
 				There are no more solutions
 				left.
 
-				\item[\texttt{01}]
+				\item[\texttt{01} Reading Full State]
 				
-				Next bytes is a solution.
+				Next bytes describe a solution.
 
-				\item[\texttt{FF}]
+				\begin{description}
+					
+					\item[\ldots Solution]
+					
+					$n$ bits, rounded up to bytes, of
+					positional interpretations. A bit
+					at position $n$ is $1$, if and
+					only of the variable $n$ is truthy.
+
+				\end{description}
+
+				\item[\texttt{02} Reading Semi State]
 				
-				There are further solutions
+				Next bytes describe a solution.
+
+				\begin{description}
+					
+					\item[\ldots Solution]
+					
+					$n$ bits, rounded up to bytes, of
+					positional interpretations. A bit
+					at position $n$ is $1$, if and
+					only of the variable $n$ is truthy.
+
+				\end{description}
+
+				\item[\texttt{FF} Unknown State]
+				
+				There may be further solutions
 				which are not provided in the 
 				document.
 
 			\end{description}
-
-			\item[\ldots Solution]
-			
-			$n$ bits, rounded up to bytes, of
-			positional interpretations. A bit
-			at position $n$ is $1$, if and
-			only of the variable $n$ is truthy.
 
 		\end{description}
         
@@ -146,5 +167,41 @@
 			% \textcolor{blue}{EQ} $\rightarrow$ \textcolor{blue}{NUM} \textcolor{blue}{|} T \textcolor{blue}{|} F \\
 			% \textcolor{blue}{BINOP} $\rightarrow$ AND \textcolor{blue}{|} OR \textcolor{blue}{|} XOR \textcolor{blue}{|} NOR \\
 		}
+
+		\item[Example] Here is an example of a word $w \in $
+		CNF divided into sections.
+        
+		\texttt{
+			{\color[HTML]{8f3faf}CNF} \\ \hrule
+			{\color[HTML]{00af3f}\# Equation:} {\color[HTML]{af005f}1 2} | {\color[HTML]{5faf00}1 -2 -3} | {\color[HTML]{afafa0}-1 3} \\
+			{\color[HTML]{00af3f}\# Solutions:} {\color[HTML]{af5f00}-1 2 -3} | {\color[HTML]{5f00af}1} {\color[HTML]{005faf}3} \\ \hrule
+			{\color[HTML]{8f3faf}1 1} \\ \hrule
+			{\color[HTML]{af5f00}1 010}00000 \\
+			2 {\color[HTML]{5f00af}010}00000 {\color[HTML]{005faf}011}00000 0 \\
+			0 \\ \hrule
+			2 {\color[HTML]{af005f}00000001 00000010} \\
+			3 {\color[HTML]{5faf00}00000001 10000010 10000011} \\
+			2 {\color[HTML]{afafa0}10000001 00000011} \\
+			0
+		}
+
+		The first section consists only of the
+		magic bytes \texttt{CNF}. The second section
+		consists of comments, every line begins with
+		\#. The magic bytes follow.
+
+		The forth divided section consists of the
+		solutions. The first solution sets every
+		variable and therefore starts with \texttt
+		{1}. The interpretation is \texttt{010}
+		filled with zeroes. The next solution does
+		not specify all variables, therefore starts
+		with \texttt{2}. The next bytes till \texttt
+		{0} are variables with sign bit.
+
+		The last section is the equation. Every
+		conjunction starts with the amount of literals,
+		followed by the literal declarations themselves.
+
     \end{description}
 \end{document}
