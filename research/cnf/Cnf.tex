@@ -85,11 +85,11 @@
 
         \item[Common Contradiction.]
         
-        \[(A + X)\cdot(B + \overline X)\equiv_\text{CNF}(BX+A\overline X)\]
+        \[(A + x)\cdot(B + \overline x)\equiv_\text{CNF}(Bx+A\overline x)\]
 
         \begin{center}
             \begin{tabular}{l|c|c|c|c|}
-                \multicolumn{1}{c}{} & \multicolumn{2}{c} X \\ \cline{2-3} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{4}{-}}
+                \multicolumn{1}{c}{} & \multicolumn{2}{c} x \\ \cline{2-3} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{4}{-}}
                 \multicolumn{1}{c||} A && \fc & \fc & \multicolumn{1}{c|}{\fc} \\ \hhline{~|*{4}{-}}
                 && \fc && \\ \cline{2-5} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \cline{3-4}
                 \multicolumn{2}{c}{} & \multicolumn{2}{c} B \\
@@ -98,12 +98,12 @@
 
         \item[Resolution.]
         
-        \[(A+X)(B+\overline X) \equiv_\text{CNF} (A+X)(B+\overline X)(A+B)\]
+        \[(A+x)(B+\overline x) \equiv_\text{CNF} (A+x)(B+\overline x)(A+B)\]
 
         \begin{multicols}{2}
             \begin{center}
                 \begin{tabular}{l|c|c|c|c|}
-                    \multicolumn{1}{c}{} & \multicolumn{2}{c} X \\ \cline{2-3} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{4}{-}}
+                    \multicolumn{1}{c}{} & \multicolumn{2}{c} x \\ \cline{2-3} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{4}{-}}
                     \multicolumn{1}{c||} A && \fc & \fc & \multicolumn{1}{c|}{\fc} \\ \hhline{~|*{4}{-}}
                     && \fc && \\ \cline{2-5} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \cline{3-4}
                     \multicolumn{2}{c}{} & \multicolumn{2}{c} B \\
@@ -112,7 +112,7 @@
 
             \begin{center}
                 \begin{tabular}{l|c|c|c|c|}
-                    \multicolumn{1}{c}{} & \multicolumn{2}{c} X \\ \cline{2-3} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{4}{-}}
+                    \multicolumn{1}{c}{} & \multicolumn{2}{c} x \\ \cline{2-3} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{4}{-}}
                     \multicolumn{1}{c||} A & {\cellcolor{black!15}} & \fc & \fc & \multicolumn{1}{c|}{\fc} \\ \hhline{~|*{4}{-}}
                     && \fc & {\cellcolor{black!15}} & \\ \cline{2-5} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \cline{3-4}
                     \multicolumn{2}{c}{} & \multicolumn{2}{c} B \\
@@ -120,19 +120,19 @@
             \end{center}
         \end{multicols}
 
-        Proof:
-
-        \begin{center}
-            $(A+X)(B+\overline X)$ is stronger than $(A+B)$
-        \end{center}
+        Proof: \begin{equation}\nonumber\begin{split}
+            (A + x) \cdot (B + \overline x) \\
+            \equiv_\text{CNF} AB+A\overline x + Bx \\
+            \Rightarrow A + B
+        \end{split}\end{equation}
 
         \item[Common Part.]
         
-        \[(A + X)\cdot(B + X)\equiv_\text{CNF}(X+AB)\]
+        \[(A + x)\cdot(B + x)\equiv_\text{CNF}(x+AB)\]
 
         \begin{center}
             \begin{tabular}{l|c|c|c|c|}
-                \multicolumn{1}{c}{} & \multicolumn{2}{c} X \\ \cline{2-3} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{4}{-}}
+                \multicolumn{1}{c}{} & \multicolumn{2}{c} x \\ \cline{2-3} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{4}{-}}
                 \multicolumn{1}{c||} A &\fc & \fc & \fc & \\ \hhline{~|*{4}{-}}
                 & \fc & \fc && \\ \cline{2-5} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \cline{3-4}
                 \multicolumn{2}{c}{} & \multicolumn{2}{c} B \\
@@ -169,6 +169,10 @@
             \equiv_\text{CNF} (A + (B + C)(\lnot B + D)) \\
             \equiv_\text{CNF} (A + BD + C \overline B)
         \end{split}\end{equation}
+
+        \item[Tri-Literal]
+        
+        \[ (a+A)(b+B)(c+C) \equiv_\text{CNF} \]
 
     \end{description}
 
