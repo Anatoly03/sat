@@ -1,9 +1,7 @@
 \documentclass[12pt, letterpaper]{article}
 \usepackage[english]{babel}
-\usepackage{amsmath}
-\usepackage{hhline}
-\usepackage{listings}
-\usepackage{multirow}
+
+\usepackage{amsmath, hhline, listings, multirow, multicol}
 \usepackage[table]{xcolor} % http://ctan.org/pkg/xcolor
 
 % fill cell
@@ -33,15 +31,23 @@
     %     \end{tabular}
     % \end{center}
 
-    \section{Equations}
+    \begin{description}
 
-    \begin{center}
-        \begin{tabular}{cc}
-            Set Notation $\cdot$ CNF & $\{\{a, \overline b\}, \{b, \overline c, \overline d\}, \{\overline a, \overline c\}\}$ \\[5px]
-            Arithmetic $\cdot$ CNF & $(a+\overline b) \cdot (b +\overline c +\overline d) \cdot (\overline a +\overline c)$ \\[5px]
-            Negated $\cdot$ DNF & $\lnot(ab + \overline bcd + ac)$ \\
-        \end{tabular}
-    \end{center}
+    \item[Conjunctive normalform]
+    
+    A satisfyability equation in conjunctive
+    normalform is a set of literal sets. We
+    denote it with $+$ as the logical operation
+    \emph{or} and $\cdot$ (can be omitted) as
+    \emph{and}.
+    \[\{\{a, \overline b\}, \{b, \overline c, \overline d\}, \{\overline a, \overline c\}\}\]
+    \[(a+\overline b) \cdot (b +\overline c +\overline d) \cdot (\overline a +\overline c)\]
+
+    \item[Disjunctive normalform]
+    
+    \[ab + \overline bcd + ac\]
+
+    \end{description}
 
     \subsection*{Formulas}
 
@@ -90,6 +96,36 @@
             \end{tabular}
         \end{center}
 
+        \item[Resolution.]
+        
+        \[(A+X)(B+\overline X) \equiv_\text{CNF} (A+X)(B+\overline X)(A+B)\]
+
+        \begin{multicols}{2}
+            \begin{center}
+                \begin{tabular}{l|c|c|c|c|}
+                    \multicolumn{1}{c}{} & \multicolumn{2}{c} X \\ \cline{2-3} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{4}{-}}
+                    \multicolumn{1}{c||} A && \fc & \fc & \multicolumn{1}{c|}{\fc} \\ \hhline{~|*{4}{-}}
+                    && \fc && \\ \cline{2-5} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \cline{3-4}
+                    \multicolumn{2}{c}{} & \multicolumn{2}{c} B \\
+                \end{tabular}
+            \end{center}
+
+            \begin{center}
+                \begin{tabular}{l|c|c|c|c|}
+                    \multicolumn{1}{c}{} & \multicolumn{2}{c} X \\ \cline{2-3} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \hhline{~|*{4}{-}}
+                    \multicolumn{1}{c||} A & {\cellcolor{black!15}} & \fc & \fc & \multicolumn{1}{c|}{\fc} \\ \hhline{~|*{4}{-}}
+                    && \fc & {\cellcolor{black!15}} & \\ \cline{2-5} \noalign{\vskip\doublerulesep\vskip-\arrayrulewidth} \cline{3-4}
+                    \multicolumn{2}{c}{} & \multicolumn{2}{c} B \\
+                \end{tabular}
+            \end{center}
+        \end{multicols}
+
+        Proof:
+
+        \begin{center}
+            $(A+X)(B+\overline X)$ is stronger than $(A+B)$
+        \end{center}
+
         \item[Common Part.]
         
         \[(A + X)\cdot(B + X)\equiv_\text{CNF}(X+AB)\]
@@ -136,7 +172,7 @@
 
     \end{description}
 
-    \section{Algorithms}
+    \section*{Algorithms}
 
     \subsection*{\texttt{bf0} $\cdot$ Brute Force}
 
